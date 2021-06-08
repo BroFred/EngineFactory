@@ -1,0 +1,23 @@
+{
+    "dataSource": [
+        {
+            "id": "my_ds",
+            "enginePath": "json",
+            "options": {
+                "data": {
+                    "test": "This %%_value_%% a  %%_value2_%%"
+                }
+            }
+        }
+    ],
+    "visualization": [
+        {
+            "id": "my_viz",
+            "enginePath": "noop",
+            "options": {
+                "dataSources": ["my_ds"]
+            }
+        }
+    ]
+    
+}

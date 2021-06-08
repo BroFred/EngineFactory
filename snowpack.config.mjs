@@ -3,6 +3,9 @@ export default {
   mount: {
     /* ... */
   },
+  alias: {
+    '@dataSources': './dataSources'
+  },
   plugins: [
     /* ... */
   ],
