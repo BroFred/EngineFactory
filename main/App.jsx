@@ -1,27 +1,30 @@
 import React, { Suspense } from 'react';
-import { dataSourceAtom, dataSelector, visualizationAtom } from './store';
+import { dataSourceAtom, dataSelector, visualizationAtom, tokenMaster } from './store';
 import { forEach } from 'ramda';
 import def from '../example/example1.json';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import ShowData from './ShowData';
-import Json from './Json';
+import VizCommon from './VizCommon';
 
 
 const App = () => {
     const initializeState = ({ set }) => {
-        const { dataSource, visualization } = def;
+        const { dataSource, visualization, tokens } = def;
         forEach(({ id, ...rest }) => {
             set(dataSourceAtom(id), rest);
         }, dataSource);
         forEach(({ id, ...rest }) => {
             set(visualizationAtom(id), rest);
-        }, visualization)
+        }, visualization);
+        forEach(({ id, value }) => {
+            set(tokenMaster(id), value);
+        }, tokens)
     }
     return <RecoilRoot initializeState={initializeState}
-    ><Suspense fallback={<></>}>
-            <Json id={'my_viz'} />
-            <ShowData id={'my_ds'}/>
-        </Suspense>
+    >
+        <Suspense fallback={<></>}><VizCommon id={'my_viz'} /></Suspense>
+        <Suspense fallback={<></>}><VizCommon id={'my_viz_rest'} /></Suspense>
+        <Suspense fallback={<></>}><ShowData id={'my_ds'}/></Suspense>
     </RecoilRoot>;
 }
 export default App;

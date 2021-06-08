@@ -1,4 +1,14 @@
 {
+    "tokens":[
+        {
+            "id": "value",
+            "value": "test"
+        },
+        {
+            "id": "value2",
+            "value": "failure"
+        }
+    ],
     "dataSource": [
         {
             "id": "my_ds",
@@ -8,6 +18,13 @@
                     "test": "This %%_value_%% a  %%_value2_%%"
                 }
             }
+        },
+        {
+            "id": "my_rest",
+            "enginePath": "rest",
+            "options": {
+                 "url": "https://randomuser.me/api/"
+            }
         }
     ],
     "visualization": [
@@ -15,9 +32,17 @@
             "id": "my_viz",
             "enginePath": "noop",
             "options": {
-                "dataSources": ["my_ds"]
+                "dataSources": ["my_ds"],
+                "vizEngine": "Bypass"
+            }
+        },
+        {
+            "id": "my_viz_rest",
+            "enginePath": "noop",
+            "options": {
+                "dataSources": ["my_rest"],
+                "vizEngine": "Bypass"
             }
         }
     ]
-    
 }

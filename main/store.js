@@ -10,12 +10,6 @@ export const dataSourceAtom = atomFamily(
         default: {},
     }
 );
-export const panelAtom = atomFamily(
-    {
-        key: 'panel',
-        default: {},
-    }
-);
 
 export const visualizationAtom = atomFamily(
     {
@@ -79,15 +73,6 @@ export const dataSelector = selectorFamily({
     },
 });
 
-export const panelSelector = selectorFamily({
-    key: 'panel',
-    get: (id) => async ({ get }) => {
-        const { enginePath, options } = get(panelAtom(id));
-        const {default: panelEngine} = await import(`/panel/${enginePath}.js`);
-        const data = await panelEngine(options); 
-        return data;
-    },
-});
 export const visualizationSelector =  selectorFamily({
     key: 'viz',
     get: (id) => async ({ get }) => {
