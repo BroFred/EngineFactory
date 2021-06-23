@@ -5,7 +5,7 @@ import def from '../example/example1.json';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import ShowData from './ShowData';
 import VizCommon from './VizCommon';
-
+import Layout from '../layout/grid';
 
 const App = () => {
     const initializeState = ({ set }) => {
@@ -22,9 +22,12 @@ const App = () => {
     }
     return <RecoilRoot initializeState={initializeState}
     >
-        <Suspense fallback={<></>}><VizCommon id={'my_viz'} /></Suspense>
-        <Suspense fallback={<></>}><VizCommon id={'my_viz_rest'} /></Suspense>
-        <Suspense fallback={<></>}><ShowData id={'my_ds'}/></Suspense>
+        <Layout>
+            <Suspense fallback={<></>}><VizCommon id={'my_viz'} /></Suspense>
+            <Suspense fallback={<></>}><VizCommon id={'my_viz_rest'} /></Suspense>
+            <Suspense fallback={<></>}><ShowData id={'my_ds'}/></Suspense>
+            <Suspense fallback={<></>}><VizCommon id={'my_vega'} /></Suspense>
+        </Layout>
     </RecoilRoot>;
 }
 export default App;

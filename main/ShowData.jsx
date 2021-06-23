@@ -8,21 +8,21 @@ const ShowData = ({id}) => {
     const setTokene = useSetRecoilState(tokenMaster('value'));
 
     useEffect(()=>{
-        setTimeout(()=>setToken('success'),1000);
-        setTimeout(()=>setData({
-            "id": "my_ds",
-            "enginePath": "json",
-            "options": {
-                "data": {
-                    "test": "This %%_value1_%% is a  %%_value2_%%"
-                }
-            }
-        }),10000);
-        setTimeout(()=>setToken1('test'),20000);
-        setTimeout(()=>{
-            console.log('?');
-            setTokene('?');
-        },25000)
+        // setTimeout(()=>setToken('success'),1000);
+        // setTimeout(()=>setData({
+        //     "id": "my_ds",
+        //     "enginePath": "json",
+        //     "options": {
+        //         "data": {
+        //             "test": "This %%_value1_%% is a  %%_value2_%%"
+        //         }
+        //     }
+        // }),10000);
+        // setTimeout(()=>setToken1('test'),20000);
+        // setTimeout(()=>{
+        //     console.log('?');
+        //     setTokene('?');
+        // },25000)
 
     },[])
     const actualData = useRecoilValue(dataSelector(id));

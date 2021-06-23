@@ -1,5 +1,5 @@
 {
-    "tokens":[
+    "tokens": [
         {
             "id": "value",
             "value": "test"
@@ -14,16 +14,51 @@
             "id": "my_ds",
             "enginePath": "json",
             "options": {
-                "data": {
-                    "test": "This %%_value_%% a  %%_value2_%%"
-                }
+                "data": [
+                    {
+                        "a": "C",
+                        "b": 2
+                    },
+                    {
+                        "a": "C",
+                        "b": 7
+                    },
+                    {
+                        "a": "C",
+                        "b": 4
+                    },
+                    {
+                        "a": "D",
+                        "b": 1
+                    },
+                    {
+                        "a": "D",
+                        "b": 2
+                    },
+                    {
+                        "a": "D",
+                        "b": 6
+                    },
+                    {
+                        "a": "E",
+                        "b": 8
+                    },
+                    {
+                        "a": "E",
+                        "b": 4
+                    },
+                    {
+                        "a": "E",
+                        "b": 7
+                    }
+                ]
             }
         },
         {
             "id": "my_rest",
             "enginePath": "rest",
             "options": {
-                 "url": "https://randomuser.me/api/"
+                "url": "https://randomuser.me/api/"
             }
         }
     ],
@@ -32,15 +67,44 @@
             "id": "my_viz",
             "enginePath": "noop",
             "options": {
-                "dataSources": ["my_ds"],
+                "dataSources": [
+                    "my_ds"
+                ],
                 "vizEngine": "Bypass"
+            }
+        },
+        {
+            "id": "my_vega",
+            "enginePath": "noop",
+            "options": {
+                "dataSources": [
+                    "my_ds"
+                ],
+                "vizEngine": "Vega",
+                "mark": "bar",
+                "encoding": {
+                    "y": {
+                        "field": "a",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "average",
+                        "field": "b",
+                        "type": "quantitative",
+                        "axis": {
+                            "title": "Average of b"
+                        }
+                    }
+                }
             }
         },
         {
             "id": "my_viz_rest",
             "enginePath": "noop",
             "options": {
-                "dataSources": ["my_rest"],
+                "dataSources": [
+                    "my_rest"
+                ],
                 "vizEngine": "Bypass"
             }
         }
