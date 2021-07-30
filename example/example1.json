@@ -5,7 +5,7 @@
             "value": "test"
         },
         {
-            "id": "value2",
+            "id": "%%_value2_%%",
             "value": "failure"
         }
     ],

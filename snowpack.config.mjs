@@ -4,7 +4,8 @@ export default {
     /* ... */
   },
   alias: {
-    '@dataSources': './dataSources'
+    '@dataSources': './dataSources',
+    'visualization/': '/visualization'
   },
   plugins: [
     /* ... */
