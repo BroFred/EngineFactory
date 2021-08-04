@@ -83,10 +83,8 @@ export const visualizationSelector =  selectorFamily({
             ...tokens,
         });
         const { enginePath, options } =  configWithToken;
-
-        const {default: vizEngine} = await import(`/visualization/${enginePath}.js`);
         const data = map((dataSourceId)=>get(dataSelector(dataSourceId)), options.dataSources);
-        return await vizEngine({data, options}); 
+        return {data, options, enginePath}; 
         
     },
 });

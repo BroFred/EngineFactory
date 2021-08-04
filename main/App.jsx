@@ -23,8 +23,10 @@ const App = () => {
     return <RecoilRoot initializeState={initializeState}
     >
         <Layout>
-            <Suspense idx={'my_viz'} fallback={<></>}><VizCommon id={'my_viz'} /></Suspense>
-            <Suspense idx={'my_viz_rest'} fallback={<></>}><VizCommon id={'my_viz_rest'} /></Suspense>
+            <Layout>
+                <Suspense idx={'my_viz'} fallback={<></>}><VizCommon id={'my_viz'} /></Suspense>
+                <Suspense idx={'my_viz_rest'} fallback={<></>}><VizCommon id={'my_viz_rest'} /></Suspense>
+            </Layout>
             <Suspense idx={'my_ds'} fallback={<></>}><ShowData id={'my_ds'} /></Suspense>
             <Suspense idx={'my_vega'} fallback={<></>}><VizCommon id={'my_vega'} /></Suspense>
         </Layout>

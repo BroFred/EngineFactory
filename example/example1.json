@@ -65,22 +65,20 @@
     "visualization": [
         {
             "id": "my_viz",
-            "enginePath": "noop",
+            "enginePath": "Bypass",
             "options": {
                 "dataSources": [
                     "my_ds"
-                ],
-                "vizEngine": "Bypass"
+                ]
             }
         },
         {
             "id": "my_vega",
-            "enginePath": "noop",
+            "enginePath": "Vega",
             "options": {
                 "dataSources": [
                     "my_ds"
                 ],
-                "vizEngine": "Vega",
                 "mark": "bar",
                 "encoding": {
                     "y": {
@@ -100,12 +98,11 @@
         },
         {
             "id": "my_viz_rest",
-            "enginePath": "noop",
+            "enginePath": "Bypass",
             "options": {
                 "dataSources": [
                     "my_rest"
-                ],
-                "vizEngine": "Bypass"
+                ]
             }
         }
     ]

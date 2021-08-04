@@ -24,7 +24,7 @@ const Draggable = ({ children, dragId, onChange, ratio }) => {
     },
     accept: 'child'
   }))
-  drop(dropRef);
+  drop(dragRef);
   drag(dragRef);
   useEffect(()=>{
     setH(100*ratio);
@@ -36,13 +36,12 @@ const Draggable = ({ children, dragId, onChange, ratio }) => {
     }
   },[dropRef.current])
 
-  return <div ref={dropRef}
-    style={{
-      resize: 'both',
-      height: h,
-      width: w,
-      overflow: 'auto',
-    }}><div ref={dragRef}>{children}</div></div>
+  return<div style={{
+    resize: 'both',
+    height: h,
+    width: w,
+    overflow: 'auto',
+  }} ref={dragRef}>{children}</div>
 }
 const replace = (index, elem, arr) => insert(index, elem, remove(index, 1, arr));
 
@@ -122,14 +121,11 @@ export default class BasicLayout extends React.PureComponent {
         >
           {addIndex(map)((elem, i) => {
             return (
-              <div key={i} >
-                <Draggable dragId={i} onChange={this.onChange} ratio={this.state.ratio}>
+                <Draggable key={i} dragId={i} onChange={this.onChange} ratio={this.state.ratio}>
                   {
                     elem
                   }
                 </Draggable>
-
-              </div>
             );
           }, this.state.childrenRerange)}
         </div>
