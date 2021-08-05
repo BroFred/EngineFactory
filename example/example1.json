@@ -7,14 +7,20 @@
         {
             "id": "value2",
             "value": "failure"
+        },
+        {
+            "id": "value3",
+            "value": "female"
         }
     ],
     "form": [{
+        "id": "my_ds_form",
         "enginePath": "select",
         "options":{
-            "dataSources": "my_ds",
+            "dataSources": "gender",
             "value": "b",
-            "label": "a"
+            "label": "a",
+            "target": "value3"
         }
     }],
     "layout":{
@@ -22,60 +28,80 @@
         "options": {
             "structure": [
                 {
+                    "i": "my_ds_form",
+                    "x": 0, "y": 1, "w": 6, "h": 1
+                },
+                {
                     "i": "my_viz",
-                    "x": 0, "y": 0, "w": 4, "h": 4
+                    "x": 0, "y": 1, "w": 4, "h": 4
                 },
                 {
                     "i": "my_viz_rest",
-                    "x": 4, "y": 0, "w": 4, "h": 4
+                    "x": 4, "y": 1, "w": 4, "h": 4
                 },
                 {
                     "i": "my_vega",
-                    "x": 6, "y": 0, "w": 4, "h": 4
+                    "x": 6, "y": 1, "w": 4, "h": 4
                 }
             ]
         }
     },
     "dataSource": [
         {
+            "id": "gender",
+            "enginePath": "json",
+            "options": {
+                "data":[
+                    {
+                        "b": "male",
+                        "a": "男"
+                    },
+                    {
+                        "b": "female",
+                        "a": "女"
+                    }
+                ]
+            } 
+        },
+        {
             "id": "my_ds",
             "enginePath": "json",
             "options": {
                 "data": [
                     {
-                        "a": "C",
+                        "a": "C2",
                         "b": 2
                     },
                     {
-                        "a": "C",
+                        "a": "C7",
                         "b": 7
                     },
                     {
-                        "a": "C",
+                        "a": "C4",
                         "b": 4
                     },
                     {
-                        "a": "D",
+                        "a": "D1",
                         "b": 1
                     },
                     {
-                        "a": "D",
+                        "a": "D2",
                         "b": 2
                     },
                     {
-                        "a": "D",
+                        "a": "D6",
                         "b": 6
                     },
                     {
-                        "a": "E",
+                        "a": "E8",
                         "b": 8
                     },
                     {
-                        "a": "E",
+                        "a": "E4",
                         "b": 4
                     },
                     {
-                        "a": "E",
+                        "a": "E7",
                         "b": 7
                     }
                 ]
@@ -85,7 +111,7 @@
             "id": "my_rest",
             "enginePath": "rest",
             "options": {
-                "url": "https://randomuser.me/api/"
+                "url": "https://randomuser.me/api/?gender=%%_value3_%%"
             }
         }
     ],
@@ -119,7 +145,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "Average of %%_value2_%%"
+                            "title": "%%_value_%% of %%_value2_%%"
                         }
                     }
                 }

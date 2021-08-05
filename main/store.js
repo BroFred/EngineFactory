@@ -1,6 +1,6 @@
 import { atomFamily, selectorFamily, atom } from 'recoil';
 import { jVar } from "json-variables";
-import {fromPairs, map, match, replace} from 'ramda';
+import { fromPairs, map, match, replace } from 'ramda';
 
 
 
@@ -25,29 +25,36 @@ export const layoutAtom = atom(
     }
 );
 
+export const formAtom = atomFamily(
+    {
+        key: 'form',
+        default: {},
+    }
+);
+
 
 export const tokenMaster = atomFamily(
     {
         key: 'tokenMaster',
-        default: "",
+        default: {value: ""},
     }
 );
 
 export const tokenAtom = selectorFamily(
     {
         key: 'token',
-        get: (id) => ({get}) => {
+        get: (id) => ({ get }) => {
             const dataSource = get(dataSourceAtom(id));
             const visualization = get(visualizationAtom(id));
             const jsonStirng = JSON.stringify({
                 ...dataSource,
                 ...visualization,
             });
-            const reg =  /\%\%\_(.*?)\_\%\%/g;
+            const reg = /\%\%\_(.*?)\_\%\%/g;
             const result = match(reg, jsonStirng);
-            const tokens = map((token)=>{
+            const tokens = map((token) => {
                 const tk = replace(/\%\%\_|\_\%\%/g, '', token);
-                return [tk, get(tokenMaster(tk))];
+                return [tk, get(tokenMaster(tk)).value];
             }, result);
             return fromPairs(tokens);
         }
@@ -63,15 +70,16 @@ export const dataSelector = selectorFamily({
             ...config,
             ...tokens,
         });
-        const { enginePath, options } =  configWithToken;
+        const { enginePath, options } = configWithToken;
 
-        const {default: dataSourceEngine} = await import(`/dataSources/${enginePath}.js`);
-        const data = await dataSourceEngine(options); 
+        const { default: dataSourceEngine } = await import(`/dataSources/${enginePath}.js`);
+        console.log(config, tokens)
+        const data = await dataSourceEngine(options);
         return data;
     },
 });
 
-export const visualizationSelector =  selectorFamily({
+export const visualizationSelector = selectorFamily({
     key: 'viz',
     get: (id) => async ({ get }) => {
         const config = get(visualizationAtom(id));
@@ -80,10 +88,26 @@ export const visualizationSelector =  selectorFamily({
             ...config,
             ...tokens,
         });
-        const { enginePath, options } =  configWithToken;
-        const data = map((dataSourceId)=>get(dataSelector(dataSourceId)), options.dataSources);
-        return {data, options, enginePath}; 
-        
+        const { enginePath, options } = configWithToken;
+        const data = map((dataSourceId) => get(dataSelector(dataSourceId)), options.dataSources);
+        return { data, options, enginePath };
+
+    },
+});
+
+export const formSelector = selectorFamily({
+    key: 'formSelector',
+    get: (id) => async ({ get }) => {
+        const config = get(formAtom(id));
+        const tokens = get(tokenAtom(id));
+        const configWithToken = jVar({
+            ...config,
+            ...tokens,
+        });
+        const { options, enginePath } = configWithToken;
+        const data = get(dataSelector(options.dataSources));
+        return { data, options, enginePath };
+
     },
 });
 
