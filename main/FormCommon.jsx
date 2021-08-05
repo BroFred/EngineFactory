@@ -4,8 +4,17 @@ import {useRecoilValue} from 'recoil';
 const FormCommon = ({id, ...props}) => {
     const {enginePath, options, data} = useRecoilValue(formSelector(id));
 
-    const Layout = React.lazy(() => import(`/form/${enginePath}.js`));
-    return <Layout options={options} data={data} {...props}/>
+    const Form = React.lazy(async () => {
+        try {
+            // this rely on user's build tool form should be in user's local folder whose paranet folder has alias of @dashboard
+            const module =  await import(`@dashboard/form/${enginePath}.js`);
+            return module
+        } catch (error) {
+            const module =  await import(`/form/${enginePath}.js`);
+            return module
+        }
+    });
+    return <Form options={options} data={data} {...props}/>
 }
 
 export default FormCommon;

@@ -145,7 +145,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "%%_value_%% of %%_value2_%%"
+                            "title": "%%_value_%% of %%_value3_%%"
                         }
                     }
                 }
