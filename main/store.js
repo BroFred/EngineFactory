@@ -1,4 +1,4 @@
-import { atomFamily, selectorFamily } from 'recoil';
+import { atomFamily, selectorFamily, atom } from 'recoil';
 import { jVar } from "json-variables";
 import {fromPairs, map, match, replace} from 'ramda';
 
@@ -18,7 +18,7 @@ export const visualizationAtom = atomFamily(
     }
 );
 
-export const layoutAtom = atomFamily(
+export const layoutAtom = atom(
     {
         key: 'layout',
         default: {},
@@ -39,11 +39,9 @@ export const tokenAtom = selectorFamily(
         get: (id) => ({get}) => {
             const dataSource = get(dataSourceAtom(id));
             const visualization = get(visualizationAtom(id));
-            const layout = get(layoutAtom(id));
             const jsonStirng = JSON.stringify({
                 ...dataSource,
                 ...visualization,
-                ...layout
             });
             const reg =  /\%\%\_(.*?)\_\%\%/g;
             const result = match(reg, jsonStirng);

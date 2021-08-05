@@ -1,35 +1,36 @@
 import React, { Suspense } from 'react';
-import { dataSourceAtom, dataSelector, visualizationAtom, tokenMaster } from './store';
-import { forEach } from 'ramda';
+import { dataSourceAtom, visualizationAtom, tokenMaster, layoutAtom } from './store';
+import { forEach, map } from 'ramda';
 import def from '../example/example1.json';
-import { RecoilRoot, useRecoilValue } from 'recoil';
-import ShowData from './ShowData';
+import { RecoilRoot } from 'recoil';
 import VizCommon from './VizCommon';
-import Layout from '../layout/grid';
-
+import LayoutCommon from './LayoutCommon';
 const App = () => {
     const initializeState = ({ set }) => {
-        const { dataSource, visualization, tokens } = def;
+        const { dataSource, visualization, tokens, layout } = def;
+        set(layoutAtom, layout);
+        forEach(({ id, value }) => {
+            set(tokenMaster(id), value);
+        }, tokens);
         forEach(({ id, ...rest }) => {
             set(dataSourceAtom(id), rest);
         }, dataSource);
         forEach(({ id, ...rest }) => {
             set(visualizationAtom(id), rest);
         }, visualization);
-        forEach(({ id, value }) => {
-            set(tokenMaster(id), value);
-        }, tokens)
     }
+    const { visualization } = def;
     return <RecoilRoot initializeState={initializeState}
     >
-        <Layout>
-            <Layout>
-                <Suspense idx={'my_viz'} fallback={<></>}><VizCommon id={'my_viz'} /></Suspense>
-                <Suspense idx={'my_viz_rest'} fallback={<></>}><VizCommon id={'my_viz_rest'} /></Suspense>
-            </Layout>
-            <Suspense idx={'my_ds'} fallback={<></>}><ShowData id={'my_ds'} /></Suspense>
-            <Suspense idx={'my_vega'} fallback={<></>}><VizCommon id={'my_vega'} /></Suspense>
-        </Layout>
+        <Suspense fallback={<></>}>
+            <LayoutCommon>
+                {
+                    map(({ id }) => {
+                        return <Suspense idx={id} fallback={<></>} key={id}><VizCommon id={id} /></Suspense>
+                    }, visualization)
+                }
+            </LayoutCommon>
+        </Suspense>
     </RecoilRoot>;
 }
 export default App;

@@ -5,10 +5,37 @@
             "value": "test"
         },
         {
-            "id": "%%_value2_%%",
+            "id": "value2",
             "value": "failure"
         }
     ],
+    "form": [{
+        "enginePath": "select",
+        "options":{
+            "dataSources": "my_ds",
+            "value": "b",
+            "label": "a"
+        }
+    }],
+    "layout":{
+        "enginePath": "grid",
+        "options": {
+            "structure": [
+                {
+                    "i": "my_viz",
+                    "x": 0, "y": 0, "w": 4, "h": 4
+                },
+                {
+                    "i": "my_viz_rest",
+                    "x": 4, "y": 0, "w": 4, "h": 4
+                },
+                {
+                    "i": "my_vega",
+                    "x": 6, "y": 0, "w": 4, "h": 4
+                }
+            ]
+        }
+    },
     "dataSource": [
         {
             "id": "my_ds",
@@ -66,6 +93,7 @@
         {
             "id": "my_viz",
             "enginePath": "Bypass",
+            "group": "viz",
             "options": {
                 "dataSources": [
                     "my_ds"
@@ -75,6 +103,7 @@
         {
             "id": "my_vega",
             "enginePath": "Vega",
+            "group": "viz",
             "options": {
                 "dataSources": [
                     "my_ds"
@@ -90,7 +119,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "Average of b"
+                            "title": "Average of %%_value2_%%"
                         }
                     }
                 }
