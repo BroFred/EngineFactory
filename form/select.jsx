@@ -6,7 +6,7 @@ import { tokenMaster } from '../main/store'
 
 const SelectorOptions = (target) => ({ value, label, data }) => {
     const setToken = useSetRecoilState(tokenMaster(target));
-    return <select name="select" onChange={(e)=>setToken({value:e.target.value})}>{
+    return <select name="select" onChange={(e)=>setToken({value:[e.target.value]})}>{
         map(
             (d) => <option key={d[label]} value={d[value]}>{d[label]}</option>,
             data,
