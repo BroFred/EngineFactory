@@ -25,7 +25,7 @@ const VegaGeneric = ({ data, options }) => {
     useEffect(()=>{
         let datas = JSON.parse ( JSON.stringify(data[0]))
         var vlSpec = {
-            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
             data: {
               values:datas,
             },
