@@ -2,46 +2,86 @@
     "tokens": [
         {
             "id": "value",
-            "value": "test"
+            "value": [
+                "test"
+            ]
         },
         {
             "id": "value2",
-            "value": "failure"
+            "value": [
+                "failure"
+            ]
         },
         {
             "id": "value3",
-            "value": "female"
+            "value": []
+        },
+        {
+            "id": "value4",
+            "value": []
         }
     ],
-    "form": [{
-        "id": "my_ds_form",
-        "enginePath": "select",
-        "options":{
-            "dataSources": "gender",
-            "value": "b",
-            "label": "a",
-            "target": "value3"
+    "form": [
+        {
+            "id": "my_ds_form",
+            "enginePath": "select",
+            "options": {
+                "dataSources": "gender",
+                "value": "b",
+                "label": "a",
+                "target": "value3"
+            }
+        },
+        {
+            "id": "my_nationalities_form",
+            "enginePath": "multiSelect",
+            "options": {
+                "needJoin": true, 
+                "dataSources": "nationalities",
+                "value": "value",
+                "label": "label",
+                "target": "value4"
+            }
         }
-    }],
-    "layout":{
+    ],
+    "layout": {
         "enginePath": "grid",
         "options": {
             "structure": [
                 {
                     "i": "my_ds_form",
-                    "x": 0, "y": 1, "w": 6, "h": 1
+                    "x": 0,
+                    "y": 1,
+                    "w": 6,
+                    "h": 1
                 },
                 {
                     "i": "my_viz",
-                    "x": 0, "y": 1, "w": 4, "h": 4
+                    "x": 0,
+                    "y": 1,
+                    "w": 4,
+                    "h": 4
                 },
                 {
                     "i": "my_viz_rest",
-                    "x": 4, "y": 1, "w": 4, "h": 4
+                    "x": 4,
+                    "y": 1,
+                    "w": 4,
+                    "h": 4
                 },
                 {
                     "i": "my_vega",
-                    "x": 6, "y": 1, "w": 4, "h": 4
+                    "x": 6,
+                    "y": 1,
+                    "w": 4,
+                    "h": 4
+                },
+                {
+                    "i": "my_nationalities_form",
+                    "x": 6,
+                    "y": 2,
+                    "w": 4,
+                    "h": 4
                 }
             ]
         }
@@ -51,7 +91,7 @@
             "id": "gender",
             "enginePath": "json",
             "options": {
-                "data":[
+                "data": [
                     {
                         "b": "male",
                         "a": "男"
@@ -61,7 +101,55 @@
                         "a": "女"
                     }
                 ]
-            } 
+            }
+        },
+        {
+            "id": "nationalities",
+            "enginePath": "json",
+            "options": {
+                "data": [
+                    {
+                        "label": "AU",
+                        "value": "au"
+                    },
+                    {
+                        "label": "BR",
+                        "value": "br"
+                    },
+                    {
+                        "label": "CA",
+                        "value": "ca"
+                    },
+                    {
+                        "label": "CH",
+                        "value": "ch"
+                    },
+                    {
+                        "label": "DE",
+                        "value": "de"
+                    },
+                    {
+                        "label": "DK",
+                        "value": "dk"
+                    },
+                    {
+                        "label": "ES",
+                        "value": "es"
+                    },
+                    {
+                        "label": "FI",
+                        "value": "fi"
+                    },
+                    {
+                        "label": "FR",
+                        "value": "fr"
+                    },
+                    {
+                        "label": "GB",
+                        "value": "gb"
+                    }
+                ]
+            }
         },
         {
             "id": "my_ds",
@@ -111,7 +199,7 @@
             "id": "my_rest",
             "enginePath": "rest",
             "options": {
-                "url": "https://randomuser.me/api/?gender=%%_value3_%%"
+                "url": "https://randomuser.me/api/?gender=%%_value3.0_%%&nat=%%_value4.0_%%"
             }
         }
     ],
@@ -145,7 +233,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "%%_value_%% of %%_value3_%%"
+                            "title": "%%_value4.0_%% of %%_value3.0_%%"
                         }
                     }
                 }

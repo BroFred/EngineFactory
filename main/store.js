@@ -1,6 +1,6 @@
 import { atomFamily, selectorFamily, atom } from 'recoil';
 import { jVar } from "json-variables";
-import { fromPairs, map, match, replace } from 'ramda';
+import { fromPairs, map, match, replace, values, all } from 'ramda';
 
 
 
@@ -53,7 +53,7 @@ export const tokenAtom = selectorFamily(
             const reg = /\%\%\_(.*?)\_\%\%/g;
             const result = match(reg, jsonStirng);
             const tokens = map((token) => {
-                const tk = replace(/\%\%\_|\_\%\%/g, '', token);
+                const tk = replace(/\%\%\_|\_\%\%/g, '', token).split('.')[0];
                 return [tk, get(tokenMaster(tk)).value];
             }, result);
             return fromPairs(tokens);
@@ -61,11 +61,15 @@ export const tokenAtom = selectorFamily(
     }
 );
 
+const anyIsEmpty = (tokens)=> !all((v)=>v, values(map((tk)=>!!tk.length, tokens)))
 export const dataSelector = selectorFamily({
     key: 'data',
     get: (id) => async ({ get }) => {
         const config = get(dataSourceAtom(id));
         const tokens = get(tokenAtom(id));
+        if(anyIsEmpty(tokens)){
+            return [];
+        }
         const configWithToken = jVar({
             ...config,
             ...tokens,
@@ -80,7 +84,6 @@ export const dataSelector = selectorFamily({
             module =  await import(`/dataSources/${enginePath}.js`);
         }
         const { default: dataSourceEngine } = module;
-        console.log(config, tokens)
         const data = await dataSourceEngine(options);
         return data;
     },
@@ -91,6 +94,9 @@ export const visualizationSelector = selectorFamily({
     get: (id) => async ({ get }) => {
         const config = get(visualizationAtom(id));
         const tokens = get(tokenAtom(id));
+        if(anyIsEmpty(tokens)){
+            return { data:[[]], options:{}, enginePath:config.enginePath };
+        }
         const configWithToken = jVar({
             ...config,
             ...tokens,
