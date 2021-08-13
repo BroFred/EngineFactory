@@ -36,7 +36,7 @@
             "id": "my_nationalities_form",
             "enginePath": "multiSelect",
             "options": {
-                "needJoin": true, 
+                "needJoin": true,
                 "dataSources": "nationalities",
                 "value": "value",
                 "label": "label",
@@ -213,19 +213,77 @@
             "id": "my_stream",
             "enginePath": "stream",
             "options": {
-                "url": "https://randomuser.me/api/?gender=%%_value3.0_%%"
+                "data": [
+                    {
+                        "a": "C2",
+                        "b": 2
+                    },
+                    {
+                        "a": "C7",
+                        "b": 7
+                    },
+                    {
+                        "a": "C4",
+                        "b": 4
+                    },
+                    {
+                        "a": "D1",
+                        "b": 1
+                    },
+                    {
+                        "a": "D2",
+                        "b": 2
+                    },
+                    {
+                        "a": "D6",
+                        "b": 6
+                    },
+                    {
+                        "a": "E8",
+                        "b": 8
+                    },
+                    {
+                        "a": "E4",
+                        "b": 4
+                    },
+                    {
+                        "a": "E7",
+                        "b": 7
+                    }
+                ]
             }
         }
     ],
     "visualization": [
         {
             "id": "my_stream_viz",
-            "enginePath": "Stream",
-            "options": {
-                "dataSources": [
-                    "my_stream"
-                ]
-            }
+            "enginePath": [
+                "Stream",
+                "Vega"
+            ],
+            "options":{
+                    "dataSources": [
+                        "my_stream"
+                    ],
+                    "postStream": {
+                        "idx": "vega-2",
+                        "mark": "bar",
+                        "encoding": {
+                            "y": {
+                                "field": "a",
+                                "type": "nominal"
+                            },
+                            "x": {
+                                "aggregate": "average",
+                                "field": "b",
+                                "type": "quantitative",
+                                "axis": {
+                                    "title": "123"
+                                }
+                            }
+                        }
+                    }
+                }
         },
         {
             "id": "my_viz",
@@ -243,6 +301,7 @@
                 "dataSources": [
                     "my_ds"
                 ],
+                "idx": "vega-1",
                 "mark": "bar",
                 "encoding": {
                     "y": {
@@ -254,7 +313,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "%%_value4.0_%% of %%_value3.0_%%"
+                            "title": "123"
                         }
                     }
                 }

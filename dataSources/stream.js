@@ -13,10 +13,10 @@ const cleanUp = (id) =>{
         subjectMap.delete(id);
     }
 }
-const stream = async ({ url }, id) => {
+const stream = async ({data} , id) => {
     cleanUp(id);
     const results = new BehaviorSubject([]);
-    const source = interval(1000).pipe(take(10), scan((acc, curr) => [...acc, curr], []));
+    const source = interval(1000).pipe(take(data.length),scan((acc, curr) => [...acc, data[curr]], []));
     const sub = source.subscribe(results);
     subjectMap.set(id, [sub, results]);
 

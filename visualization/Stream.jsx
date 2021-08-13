@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, cloneElement } from 'react';
 
-const Stream = ({ data, options }) => {
-    const [res, setRes] = useState('')
+const Stream = ({ data, options, children }) => {
+    const [res, setRes] = useState('');
     useEffect(() => {
         try {
             const [results$, cleanUp] = data[0];
@@ -11,9 +11,9 @@ const Stream = ({ data, options }) => {
             console.log(error)
         }
         }, [data])
-    return <div>{
-        JSON.stringify(res)
-    }</div>
+    return <>{
+        cloneElement(children,{data:[res], options:options.postStream} )
+    }</>
 }
 
 export default Stream;
