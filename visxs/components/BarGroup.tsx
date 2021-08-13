@@ -11,6 +11,13 @@ import { getSeededRandom, genBins } from "@visx/mock-data";
 
 const groupLength = 100;
 
+interface BarProps {
+  height: number;
+  width: number;
+  groupType: "group" | "stack";
+  onPointerUp?: ()=>void
+}
+
 function genData(dataLength: number) {
   const seededRandom = getSeededRandom(0.81);
   return Array(dataLength)
@@ -27,11 +34,8 @@ function BaseChart({
   height,
   width,
   groupType,
-}: {
-  height: number;
-  width: number;
-  groupType: "group" | "stack";
-}) {
+  onPointerUp,
+}: BarProps) {
   const numGroups = Math.max(Math.floor(width / groupLength), 3);
   const data = useMemo(() => genData(numGroups), [numGroups]);
   console.log('data',data)
@@ -43,6 +47,7 @@ function BaseChart({
       height={height}
       yScale={{ type: "linear" }}
       xScale={{ type: "band", padding: 0.1 }}
+      onPointerUp={onPointerUp}
     >
       <Axis orientation="bottom" />
       <Axis orientation="left" />
@@ -67,16 +72,19 @@ function BaseChart({
           dataKey="c"
           xAccessor={(d) => d.key}
           yAccessor={(d) => d.c}
+          onFocus={(e) => {
+            console.log('666')
+          }}
         />
       </GroupType>
     </XYChart>
   );
 }
 
-export function BarGrouped(props: { height: number; width: number }) {
+export function BarGrouped(props: BarProps) {
   return <BaseChart groupType="group" {...props} />;
 }
 
-export function BarStacked(props: { height: number; width: number }) {
+export function BarStacked(props: BarProps) {
   return <BaseChart groupType="stack" {...props} />;
 }

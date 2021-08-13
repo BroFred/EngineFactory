@@ -19,6 +19,10 @@
         {
             "id": "value4",
             "value": []
+        },
+        {
+          "id": "value5",
+          "value": []
         }
     ],
     "form": [
@@ -48,42 +52,70 @@
         "enginePath": "grid",
         "options": {
             "structure": [
-                {
-                    "i": "my_ds_form",
-                    "x": 0,
-                    "y": 1,
-                    "w": 6,
-                    "h": 1
-                },
-                {
-                    "i": "my_viz",
-                    "x": 0,
-                    "y": 1,
-                    "w": 4,
-                    "h": 4
-                },
-                {
-                    "i": "my_viz_rest",
-                    "x": 4,
-                    "y": 1,
-                    "w": 4,
-                    "h": 4
-                },
-                {
-                    "i": "my_vega",
-                    "x": 6,
-                    "y": 1,
-                    "w": 4,
-                    "h": 4
-                },
-                {
-                    "i": "my_nationalities_form",
-                    "x": 6,
-                    "y": 2,
-                    "w": 4,
-                    "h": 4
-                }
-            ]
+              {
+                  "w": 8,
+                  "h": 8,
+                  "x": 0,
+                  "y": 8,
+                  "i": "my_Bar",
+                  "moved": false,
+                  "static": false
+              },
+              {
+                  "w": 5,
+                  "h": 8,
+                  "x": 0,
+                  "y": 16,
+                  "i": "my_Pie",
+                  "moved": false,
+                  "static": false
+              },
+              {
+                  "w": 5,
+                  "h": 4,
+                  "x": 0,
+                  "y": 0,
+                  "i": "my_ds_form",
+                  "moved": false,
+                  "static": false
+              },
+              {
+                  "w": 4,
+                  "h": 4,
+                  "x": 5,
+                  "y": 0,
+                  "i": "my_nationalities_form",
+                  "moved": false,
+                  "static": false
+              },
+              {
+                  "w": 4,
+                  "h": 4,
+                  "x": 0,
+                  "y": 4,
+                  "i": "my_vega",
+                  "moved": false,
+                  "static": false
+              },
+              {
+                  "w": 4,
+                  "h": 4,
+                  "x": 4,
+                  "y": 4,
+                  "i": "my_viz",
+                  "moved": false,
+                  "static": false
+              },
+              {
+                  "w": 4,
+                  "h": 4,
+                  "x": 8,
+                  "y": 4,
+                  "i": "my_viz_rest",
+                  "moved": false,
+                  "static": false
+              }
+          ]
         }
     },
     "dataSource": [
@@ -201,6 +233,118 @@
             "options": {
                 "url": "https://randomuser.me/api/?gender=%%_value3.0_%%&nat=%%_value4.0_%%"
             }
+        },
+        {
+          "id": "my_visx_bar",
+          "enginePath": "json",
+          "options": {
+            "data": [
+              { "x": "ShangHai", "y": 4 },
+              { "x": "BeiJing", "y": 10 },
+              { "x": "JiangSu", "y": 15 },
+              { "x": "Hubei", "y": 23 }
+            ]
+          }
+        },
+        {
+          "id": "my_visx_pie",
+          "enginePath": "json",
+          "options": {
+            "data": [
+              { 
+                "value": "ShangHai",
+                "data": [
+                  {
+                    "symbol": "ADA",
+                    "amount": "100",
+                    "color": "#66d9e8",
+                    "inUSD": 1.48
+                  },
+                  {
+                    "symbol": "SOL",
+                    "amount": "200",
+                    "color": "#ff8787",
+                    "inUSD": 2.48
+                  },
+                  {
+                    "symbol": "BTC",
+                    "amount": "50",
+                    "color": "#fcc419",
+                    "inUSD": 3.48
+                  }
+                ]
+              },
+              { 
+                "value": "BeiJing", 
+                "data": [
+                  {
+                    "symbol": "ADA",
+                    "amount": "100",
+                    "color": "#66d9e8",
+                    "inUSD": 1
+                  },
+                  {
+                    "symbol": "SOL",
+                    "amount": "100",
+                    "color": "#ff8787",
+                    "inUSD": 3.48
+                  },
+                  {
+                    "symbol": "BTC",
+                    "amount": "100",
+                    "color": "#fcc419",
+                    "inUSD": 2.48
+                  }
+                ]
+              },
+              { 
+                "value": "JiangSu", 
+                "data":[
+                  {
+                    "symbol": "ADA",
+                    "amount": "200",
+                    "color": "#66d9e8",
+                    "inUSD": 0.6
+                  },
+                  {
+                    "symbol": "SOL",
+                    "amount": "100",
+                    "color": "#ff8787",
+                    "inUSD": 1
+                  },
+                  {
+                    "symbol": "BTC",
+                    "amount": "50",
+                    "color": "#fcc419",
+                    "inUSD": 1.8
+                  }
+                ]
+              },
+              { 
+                "value": "Hubei", 
+                "data": [
+                  {
+                    "symbol": "ADA",
+                    "amount": "500",
+                    "color": "#66d9e8",
+                    "inUSD": 1.48
+                  },
+                  {
+                    "symbol": "SOL",
+                    "amount": "200",
+                    "color": "#ff8787",
+                    "inUSD": 2.8
+                  },
+                  {
+                    "symbol": "BTC",
+                    "amount": "50",
+                    "color": "#fcc419",
+                    "inUSD": 1.1
+                  }
+                ]
+              }
+            ]
+          }
         }
     ],
     "visualization": [
@@ -247,6 +391,28 @@
                     "my_rest"
                 ]
             }
+        },
+        {
+          "id": "my_Bar",
+          "enginePath": "Bar",
+          "options": {
+              "dataSources": [
+                  "my_visx_bar"
+              ],
+              "target": "value5"
+          }
+        },
+        {
+          "id": "my_Pie",
+          "enginePath": "Pie",
+          "options": {
+              "dataSources": [
+                  "my_visx_pie"
+              ],
+              "title": "%%_value5.0_%%"
+
+          }
         }
+        
     ]
 }

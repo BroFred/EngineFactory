@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 import VizCommon from './VizCommon';
 import LayoutCommon from './LayoutCommon';
 import FormCommon from './FormCommon';
+
 const App = () => {
     const initializeState = ({ set }) => {
         const { dataSource, visualization, tokens, layout, form } = def;

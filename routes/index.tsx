@@ -5,7 +5,7 @@ import {
     Switch,
   } from 'react-router-dom';
 import App from '../main/App';
-import Visx from '../visx';
+import Visx from '../visxs';
 
 
 const BasicRoute = () => {
