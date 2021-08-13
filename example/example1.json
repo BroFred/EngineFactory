@@ -49,6 +49,13 @@
         "options": {
             "structure": [
                 {
+                    "i": "my_nationalities_form",
+                    "x": 6,
+                    "y": 2,
+                    "w": 4,
+                    "h": 4
+                },
+                {
                     "i": "my_ds_form",
                     "x": 0,
                     "y": 1,
@@ -77,9 +84,9 @@
                     "h": 4
                 },
                 {
-                    "i": "my_nationalities_form",
+                    "i": "my_stream_viz",
                     "x": 6,
-                    "y": 2,
+                    "y": 3,
                     "w": 4,
                     "h": 4
                 }
@@ -201,13 +208,28 @@
             "options": {
                 "url": "https://randomuser.me/api/?gender=%%_value3.0_%%&nat=%%_value4.0_%%"
             }
+        },
+        {
+            "id": "my_stream",
+            "enginePath": "stream",
+            "options": {
+                "url": "https://randomuser.me/api/?gender=%%_value3.0_%%"
+            }
         }
     ],
     "visualization": [
         {
+            "id": "my_stream_viz",
+            "enginePath": "Stream",
+            "options": {
+                "dataSources": [
+                    "my_stream"
+                ]
+            }
+        },
+        {
             "id": "my_viz",
             "enginePath": "Bypass",
-            "group": "viz",
             "options": {
                 "dataSources": [
                     "my_ds"
@@ -217,7 +239,6 @@
         {
             "id": "my_vega",
             "enginePath": "Vega",
-            "group": "viz",
             "options": {
                 "dataSources": [
                     "my_ds"

@@ -9,7 +9,7 @@ const RGL = WidthProvider(GridLayout);
 const DashboardGrid = ({options, children}) =>{
   const layout = options.structure;
   const childrenWithlayout = useMemo(()=>{
-      const childWithLayout = zip(sortBy(prop('key'), children), sortBy(prop('id'), layout));
+      const childWithLayout = zip(sortBy(prop('key'), children), sortBy(prop('i'), layout));
       return map(([child, layout])=>{
         return (
         <Child key={layout.i} style={{outline: '1px solid black'}}>{child}</Child>
