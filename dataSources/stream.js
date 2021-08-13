@@ -1,9 +1,9 @@
-import { BehaviorSubject, interval, take, scan } from "rxjs";
-const subjectMap = new Map();
+import { BehaviorSubject, interval, scan } from "rxjs";
+export const subjectMap = new Map();
 
 
 
-const cleanUp = (id) =>{
+export const cleanUp = (id) =>{
     if (subjectMap.has(id)) {
         const [sub, behave] = subjectMap.get(id);
         sub.unsubscribe();
@@ -16,7 +16,7 @@ const cleanUp = (id) =>{
 const stream = async ({data} , id) => {
     cleanUp(id);
     const results = new BehaviorSubject([]);
-    const source = interval(1000).pipe(take(data.length),scan((acc, curr) => [...acc, data[curr]], []));
+    const source = interval(1000).pipe(scan((acc, curr) => data[curr] ? [...acc, data[curr]] : acc, []));
     const sub = source.subscribe(results);
     subjectMap.set(id, [sub, results]);
 

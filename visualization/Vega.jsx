@@ -7,7 +7,7 @@ const debounce = (ms , fn) => {
     timer = setTimeout(()=>{fn(...args)},ms); 
   }
 }
-const VegaGeneric = ({ data, options }) => {
+const VegaGeneric = ({ data, options={idx:123} }) => {
   const ref = useRef();
   const [{width, height}, setDim] = useState({width:'', height:''});
   const debounceSetDim = debounce(200, setDim);

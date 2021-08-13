@@ -278,7 +278,7 @@
                                 "field": "b",
                                 "type": "quantitative",
                                 "axis": {
-                                    "title": "123"
+                                    "title": "%%_value4.0_%% of %%_value3.0_%%"
                                 }
                             }
                         }
@@ -313,7 +313,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "123"
+                            "title": "%%_value4.0_%% of %%_value3.0_%%"
                         }
                     }
                 }
