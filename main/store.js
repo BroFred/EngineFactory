@@ -84,7 +84,7 @@ export const dataSelector = selectorFamily({
             module =  await import(`/dataSources/${enginePath}.js`);
         }
         const { default: dataSourceEngine } = module;
-        const data = await dataSourceEngine(options);
+        const data = await dataSourceEngine(options, id);
         return data;
     },
 });

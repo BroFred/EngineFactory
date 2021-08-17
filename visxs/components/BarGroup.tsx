@@ -6,6 +6,7 @@ import {
   BarStack,
   Axis,
   lightTheme,
+  Tooltip
 } from "@visx/xychart";
 import { getSeededRandom, genBins } from "@visx/mock-data";
 
@@ -72,9 +73,6 @@ function BaseChart({
           dataKey="c"
           xAccessor={(d) => d.key}
           yAccessor={(d) => d.c}
-          onFocus={(e) => {
-            console.log('666')
-          }}
         />
       </GroupType>
     </XYChart>

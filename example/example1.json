@@ -40,7 +40,7 @@
             "id": "my_nationalities_form",
             "enginePath": "multiSelect",
             "options": {
-                "needJoin": true, 
+                "needJoin": true,
                 "dataSources": "nationalities",
                 "value": "value",
                 "label": "label",
@@ -52,70 +52,70 @@
         "enginePath": "grid",
         "options": {
             "structure": [
-              {
+                {
+                    "i": "my_nationalities_form",
+                    "x": 6,
+                    "y": 2,
+                    "w": 4,
+                    "h": 4
+                },
+                {
+                    "i": "my_ds_form",
+                    "x": 0,
+                    "y": 1,
+                    "w": 6,
+                    "h": 1
+                },
+                {
+                    "i": "my_viz",
+                    "x": 0,
+                    "y": 1,
+                    "w": 4,
+                    "h": 4
+                },
+                {
+                    "i": "my_viz_rest",
+                    "x": 4,
+                    "y": 1,
+                    "w": 4,
+                    "h": 4
+                },
+                {
+                    "i": "my_vega",
+                    "x": 6,
+                    "y": 1,
+                    "w": 4,
+                    "h": 4
+                },
+                {
+                    "i": "my_stream_viz",
+                    "x": 6,
+                    "y": 3,
+                    "w": 4,
+                    "h": 4
+                },
+                {
                   "w": 8,
                   "h": 8,
                   "x": 0,
                   "y": 8,
-                  "i": "my_Bar",
-                  "moved": false,
-                  "static": false
-              },
-              {
-                  "w": 5,
-                  "h": 8,
+                  "i": "my_Bar"
+                },
+                {
+                    "w": 5,
+                    "h": 8,
+                    "x": 0,
+                    "y": 16,
+                    "i": "my_Pie"
+                },
+                {
+                  "w": 10,
+                  "h": 10,
                   "x": 0,
-                  "y": 16,
-                  "i": "my_Pie",
-                  "moved": false,
-                  "static": false
-              },
-              {
-                  "w": 5,
-                  "h": 4,
-                  "x": 0,
-                  "y": 0,
-                  "i": "my_ds_form",
-                  "moved": false,
-                  "static": false
-              },
-              {
-                  "w": 4,
-                  "h": 4,
-                  "x": 5,
-                  "y": 0,
-                  "i": "my_nationalities_form",
-                  "moved": false,
-                  "static": false
-              },
-              {
-                  "w": 4,
-                  "h": 4,
-                  "x": 0,
-                  "y": 4,
-                  "i": "my_vega",
-                  "moved": false,
-                  "static": false
-              },
-              {
-                  "w": 4,
-                  "h": 4,
-                  "x": 4,
-                  "y": 4,
-                  "i": "my_viz",
-                  "moved": false,
-                  "static": false
-              },
-              {
-                  "w": 4,
-                  "h": 4,
-                  "x": 8,
-                  "y": 4,
-                  "i": "my_viz_rest",
-                  "moved": false,
-                  "static": false
+                  "y": 2,
+                  "i": "my_Line"
               }
-          ]
+            ]
         }
     },
     "dataSource": [
@@ -235,15 +235,54 @@
             }
         },
         {
+            "id": "my_stream",
+            "enginePath": "stream",
+            "options": {
+                "data": [
+                    {
+                        "a": "C2",
+                        "b": 2
+                    },
+                    {
+                        "a": "C7",
+                        "b": 7
+                    },
+                    {
+                        "a": "C4",
+                        "b": 4
+                    },
+                    {
+                        "a": "D1",
+                        "b": 1
+                    },
+                    {
+                        "a": "D2",
+                        "b": 2
+                    },
+                    {
+                        "a": "D6",
+                        "b": 6
+                    },
+                    {
+                        "a": "E8",
+                        "b": 8
+                    },
+                    {
+                        "a": "E4",
+                        "b": 4
+                    },
+                    {
+                        "a": "E7",
+                        "b": 7
+                    }
+                ]
+            }
+        },
+        {
           "id": "my_visx_bar",
           "enginePath": "json",
           "options": {
-            "data": [
-              { "x": "ShangHai", "y": 4 },
-              { "x": "BeiJing", "y": 10 },
-              { "x": "JiangSu", "y": 15 },
-              { "x": "Hubei", "y": 23 }
-            ]
+            "data": [ { "x": "ShangHai", "y": 4 }, { "x": "BeiJing", "y": 10 }, { "x": "JiangSu", "y": 15 }, { "x": "Hubei", "y": 23 } ]
           }
         },
         {
@@ -253,105 +292,114 @@
             "data": [
               { 
                 "value": "ShangHai",
-                "data": [
-                  {
-                    "symbol": "ADA",
-                    "amount": "100",
-                    "color": "#66d9e8",
-                    "inUSD": 1.48
-                  },
-                  {
-                    "symbol": "SOL",
-                    "amount": "200",
-                    "color": "#ff8787",
-                    "inUSD": 2.48
-                  },
-                  {
-                    "symbol": "BTC",
-                    "amount": "50",
-                    "color": "#fcc419",
-                    "inUSD": 3.48
-                  }
-                ]
+                "data": [ { "symbol": "ADA", "amount": "100", "color": "#66d9e8", "inUSD": 1.48 }, { "symbol": "SOL", "amount": "200", "color": "#ff8787", "inUSD": 2.48 }, { "symbol": "BTC", "amount": "50", "color": "#fcc419", "inUSD": 3.48 } ]
               },
               { 
                 "value": "BeiJing", 
-                "data": [
-                  {
-                    "symbol": "ADA",
-                    "amount": "100",
-                    "color": "#66d9e8",
-                    "inUSD": 1
-                  },
-                  {
-                    "symbol": "SOL",
-                    "amount": "100",
-                    "color": "#ff8787",
-                    "inUSD": 3.48
-                  },
-                  {
-                    "symbol": "BTC",
-                    "amount": "100",
-                    "color": "#fcc419",
-                    "inUSD": 2.48
-                  }
-                ]
+                "data": [ { "symbol": "ADA", "amount": "100", "color": "#66d9e8", "inUSD": 1 }, { "symbol": "SOL", "amount": "100", "color": "#ff8787", "inUSD": 3.48 }, { "symbol": "BTC", "amount": "100", "color": "#fcc419", "inUSD": 2.48 } ]
               },
               { 
                 "value": "JiangSu", 
-                "data":[
-                  {
-                    "symbol": "ADA",
-                    "amount": "200",
-                    "color": "#66d9e8",
-                    "inUSD": 0.6
-                  },
-                  {
-                    "symbol": "SOL",
-                    "amount": "100",
-                    "color": "#ff8787",
-                    "inUSD": 1
-                  },
-                  {
-                    "symbol": "BTC",
-                    "amount": "50",
-                    "color": "#fcc419",
-                    "inUSD": 1.8
-                  }
-                ]
+                "data":[ { "symbol": "ADA", "amount": "200", "color": "#66d9e8", "inUSD": 0.6 }, { "symbol": "SOL", "amount": "100", "color": "#ff8787", "inUSD": 1 }, { "symbol": "BTC", "amount": "50", "color": "#fcc419", "inUSD": 1.8 } ]
               },
               { 
                 "value": "Hubei", 
-                "data": [
-                  {
-                    "symbol": "ADA",
-                    "amount": "500",
-                    "color": "#66d9e8",
-                    "inUSD": 1.48
-                  },
-                  {
-                    "symbol": "SOL",
-                    "amount": "200",
-                    "color": "#ff8787",
-                    "inUSD": 2.8
-                  },
-                  {
-                    "symbol": "BTC",
-                    "amount": "50",
-                    "color": "#fcc419",
-                    "inUSD": 1.1
-                  }
-                ]
-              }
+                "data": [ { "symbol": "ADA", "amount": "500", "color": "#66d9e8", "inUSD": 1.48 }, { "symbol": "SOL", "amount": "200", "color": "#ff8787", "inUSD": 2.8 }, { "symbol": "BTC", "amount": "50", "color": "#fcc419", "inUSD": 1.1 } ] 
+                } 
             ]
           }
-        }
+        },
+        {
+          "id": "my_stream_line",
+          "enginePath": "stream",
+          "options": {
+              "data": [
+                {
+                  "x": "01",
+                  "y": 30
+                },
+                {
+                  "x": "02",
+                  "y": 100
+                },
+                {
+                  "x": "03",
+                  "y": 50
+                },
+                {
+                  "x": "04",
+                  "y": 90
+                },
+                {
+                  "x": "05",
+                  "y": 200
+                },
+                {
+                  "x": "06",
+                  "y": 130
+                },
+                {
+                  "x": "07",
+                  "y": 250
+                },
+                {
+                  "x": "08",
+                  "y": 300
+                },
+                {
+                  "x": "09",
+                  "y": 100
+                },
+                {
+                  "x": "10",
+                  "y": 500
+                },
+                {
+                  "x": "11",
+                  "y": 100
+                },
+                {
+                  "x": "12",
+                  "y": 800
+                }
+              ]
+          }
+      }
     ],
     "visualization": [
         {
+            "id": "my_stream_viz",
+            "enginePath": [
+                "Stream",
+                "Vega"
+            ],
+            "options":{
+                    "dataSources": [
+                        "my_stream"
+                    ],
+                    "postStream": {
+                        "idx": "vega-2",
+                        "mark": "bar",
+                        "encoding": {
+                            "y": {
+                                "field": "a",
+                                "type": "nominal"
+                            },
+                            "x": {
+                                "aggregate": "average",
+                                "field": "b",
+                                "type": "quantitative",
+                                "axis": {
+                                    "title": "123"
+                                }
+                            }
+                        }
+                    }
+                }
+        },
+        {
             "id": "my_viz",
             "enginePath": "Bypass",
-            "group": "viz",
             "options": {
                 "dataSources": [
                     "my_ds"
@@ -361,11 +409,11 @@
         {
             "id": "my_vega",
             "enginePath": "Vega",
-            "group": "viz",
             "options": {
                 "dataSources": [
                     "my_ds"
                 ],
+                "idx": "vega-1",
                 "mark": "bar",
                 "encoding": {
                     "y": {
@@ -377,7 +425,7 @@
                         "field": "b",
                         "type": "quantitative",
                         "axis": {
-                            "title": "%%_value4.0_%% of %%_value3.0_%%"
+                            "title": "123"
                         }
                     }
                 }
@@ -410,6 +458,19 @@
                   "my_visx_pie"
               ],
               "title": "%%_value5.0_%%"
+
+          }
+        },
+        {
+          "id": "my_Line",
+          "enginePath": ["Stream","Line"],
+          "options": {
+              "dataSources": [
+                  "my_stream_line"
+              ],
+              "postStream": {
+                "lineConfig": "this is line config"
+              }
 
           }
         }

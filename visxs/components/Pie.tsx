@@ -31,11 +31,11 @@ export default function PieChart({
   data=coins
 }) {
   const [active, setActive] = useState(null);
-  const half = width / 2;
-  // console.log(active);
+  const half = width / 3;
+  const th = width / 2;
   return (
-      <svg width={width} height={width}>
-        <Group top={half} left={half}>
+      <svg width={width} height={height}>
+        <Group top={th-10} left={th}>
           <Pie
             data={data}
             pieValue={(v) => v.amount * v.inUSD}

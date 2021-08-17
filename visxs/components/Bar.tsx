@@ -15,6 +15,7 @@ const test = [{ "x": "ShangHai", "y": 4 },
 { "x": "BeiJing", "y": 10 },
 { "x": "JiangSu", "y": 15 },
 { "x": "Hubei", "y": 23 }]
+
 export default function Bar({
   width,
   height,
@@ -22,6 +23,7 @@ export default function Bar({
   onPointerUp,
   data=test
 }: BarProps) {
+  console.log(222,width,height)
     const xConfig = { type: 'band', paddingInner: 0.3 } as const;
     const yConfig = { type: 'linear' } as const;
   return (
@@ -42,6 +44,10 @@ export default function Bar({
         yAccessor={(d) => vertical ? d.y : d.x}
       />
       <Tooltip
+        snapTooltipToDatumX
+        snapTooltipToDatumY
+        showVerticalCrosshair
+        showSeriesGlyphs
         renderTooltip={({tooltipData}) => (
           <p>{
             `Stuff: ${tooltipData?.nearestDatum.datum.y}`

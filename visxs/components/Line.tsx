@@ -5,6 +5,8 @@ import {
     XYChart,
     Tooltip,
   } from '@visx/xychart';
+  import { animated, useSpring } from 'react-spring';
+
 import React from "react";
 import { ParentSize } from '@visx/responsive';
 import {
@@ -22,8 +24,8 @@ import { Zoom } from '@visx/zoom';
   ];
   
   const data2 = [
-    { x: '2020-01-01', y: 30 },
-    { x: '2020-01-02', y: 40 },
+    { x: '2020-01-01', y: 10 },
+    { x: '2020-01-02', y: 50 },
     { x: '2020-01-03', y: 80 },
   ];
 
@@ -31,6 +33,19 @@ import { Zoom } from '@visx/zoom';
     { x: '2020-01-01', y: 60 },
     { x: '2020-01-02', y: 100 },
     { x: '2020-01-03', y: 20 },
+  ];
+
+  const data4 = [
+    { x: '01', y: 30 },
+    { x: '02', y: 100 },
+    { x: '03', y: 50 },
+    { x: '04', y: 90 },
+    { x: '05', y: 200 },
+    { x: '06', y: 130 },
+    { x: '07', y: 250 },
+    { x: '08', y: 300 },
+    { x: '09', y: 100 },
+    { x: '10', y: 600 },
   ];
   
   const accessors = {
@@ -78,6 +93,24 @@ import { Zoom } from '@visx/zoom';
   }
   
   const Line = () => {
+      return (
+        <XYChart 
+          height={300} 
+          xScale={{
+            type: 'band',
+          }} 
+          yScale={{ 
+            type: 'linear',
+          }}>
+          <AnimatedAxis orientation="bottom" numTicks={10} label="foobar" />
+          <AnimatedLineSeries dataKey="Line 2" data={data4} {...accessors} />
+        </XYChart>
+      )
+    }
+
+  export default Line
+
+  export const ZoomLine = () => {
     const initialTransform = {
         scaleX: 1.0,
         scaleY: 1.0,
@@ -110,5 +143,3 @@ import { Zoom } from '@visx/zoom';
       </ZoomControl>
       )
     }
-
-  export default Line

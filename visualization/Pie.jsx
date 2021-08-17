@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Pie from "../visxs/components/Pie";
+import { ParentSize } from '@visx/responsive';
+
 
 const PieChart = ({ data, options }) => {
   console.log('pie',data,options)
@@ -10,9 +12,9 @@ const PieChart = ({ data, options }) => {
   }
   console.log('originData',originData)
   return (
-    <div>
-      <Pie width={300} height={300} data={originData}></Pie>
-    </div>
+    <ParentSize>
+      {({ width, height }) => <Pie width={width} height={height} data={originData}></Pie>}
+    </ParentSize>
   );
 };
 
