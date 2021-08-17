@@ -36,7 +36,9 @@ const VegaGeneric = ({ data, options={idx:123} }) => {
             ...options
           };
           // Embed the visualization in the container with id `vis`
-          vegaEmbed(`#${options.idx}`, vlSpec);
+          
+          const res = vegaEmbed(`#${options.idx}`, vlSpec);
+          return ()=> res.then(({finalize})=>finalize())
         }
     },[width, height, data])
     return <div id={`${options.idx}`} ref={ref} ></div>
