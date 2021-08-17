@@ -39,7 +39,6 @@ function BaseChart({
 }: BarProps) {
   const numGroups = Math.max(Math.floor(width / groupLength), 3);
   const data = useMemo(() => genData(numGroups), [numGroups]);
-  console.log('data',data)
   const GroupType = groupType === "group" ? BarGroup : BarStack;
   return (
     <XYChart

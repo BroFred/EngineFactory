@@ -6,11 +6,6 @@ import Area from "./components/Area";
 import Pie from "./components/Pie";
 import Percentage from "./components/Percentage";
 
-import Test from "./components/Test";
-
-import { ParentSize } from "@visx/responsive";
-
-
 interface IChartEntry {
   name: string;
   key: string;
@@ -23,19 +18,15 @@ interface ChartProps {
 }
 
 const CHARTS: IChartEntry[] = [
+  { name: "Pie chart", component: Pie, key: "pie" },
   { name: "Percentage chart", component: Percentage, key: "Percentage" },
-  { name: "Test chart", component: Test, key: "test" },
   { name: "Bar chart", component: Bar, key: "xyBar" },
   { name: "Grouped Bars", component: BarGrouped, key: "groupBar" },
   { name: "Stacked Bars", component: BarStacked, key: "stackBar" },
   { name: "TransposedBar chart", component: TransposedBar, key: "transposedBar" },
   { name: "Line chart", component: Line, key: "line" },
   { name: "Zoom Line", component: ZoomLine, key: "Zoom Line" },
-
   { name: "Area chart", component: Area, key: "area" },
-  { name: "Pie chart", component: Pie, key: "pie" },
-
-
 ];
 
 const Visx = () => {

@@ -1,11 +1,9 @@
 import {
     AnimatedAxis, // any of these can be non-animated equivalents
-    AnimatedGrid,
     AnimatedLineSeries,
     XYChart,
     Tooltip,
   } from '@visx/xychart';
-  import { animated, useSpring } from 'react-spring';
 
 import React from "react";
 import { ParentSize } from '@visx/responsive';
@@ -47,6 +45,21 @@ import { Zoom } from '@visx/zoom';
     { x: '09', y: 100 },
     { x: '10', y: 600 },
   ];
+
+  const data5 = [
+    { x: '01', y: 10 },
+    { x: '02', y: 500 },
+    { x: '03', y: 90 },
+    { x: '04', y: 90 },
+    { x: '05', y: 100 },
+    { x: '06', y: 30 },
+    { x: '07', y: 550 },
+    { x: '08', y: 100 },
+    { x: '09', y: 70 },
+    { x: '10', y: 100 },
+  ];
+
+  const datas = [data4,data5]
   
   const accessors = {
     xAccessor: (d:any) => d.x,
@@ -89,21 +102,41 @@ import { Zoom } from '@visx/zoom';
         }}
       </ParentSize>
     );
-  
   }
   
-  const Line = () => {
+  const Line = ({
+    width,
+    height,
+    data=datas,
+  }) => {
       return (
-        <XYChart 
-          height={300} 
+        <XYChart
+          width={width}
+          height={height} 
           xScale={{
             type: 'band',
           }} 
           yScale={{ 
             type: 'linear',
           }}>
-          <AnimatedAxis orientation="bottom" numTicks={10} label="foobar" />
-          <AnimatedLineSeries dataKey="Line 2" data={data4} {...accessors} />
+          <AnimatedAxis orientation="left"  label="value" />
+          <AnimatedAxis orientation="bottom"  label="label" />
+          {
+            data.map((v,i)=>
+              <AnimatedLineSeries dataKey={i} data={v} {...accessors} />
+            )
+          }
+          <Tooltip
+            snapTooltipToDatumX
+            snapTooltipToDatumY
+            showVerticalCrosshair
+            showSeriesGlyphs
+            renderTooltip={({tooltipData}) => (
+              <p>{
+                `value: ${tooltipData?.nearestDatum.datum.y}`
+              }</p>
+            )}
+          />
         </XYChart>
       )
     }
@@ -137,6 +170,17 @@ import { Zoom } from '@visx/zoom';
               <AnimatedLineSeries dataKey="Line 1" data={data1} {...accessors} />
               <AnimatedLineSeries dataKey="Line 2" data={data2} {...accessors} />
               <AnimatedLineSeries dataKey="Line 3" data={data3} {...accessors} />
+              <Tooltip
+                snapTooltipToDatumX
+                snapTooltipToDatumY
+                showVerticalCrosshair
+                showSeriesGlyphs
+                renderTooltip={({tooltipData}) => (
+                  <p>{
+                    `value: ${tooltipData?.nearestDatum.datum.y}`
+                  }</p>
+                )}
+              />
             </XYChart>
           )
         }}

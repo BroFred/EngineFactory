@@ -26,21 +26,20 @@ const coins = [
 ];
 
 export default function PieChart({
-  width,
-  height,
+  width=100,
+  height=100,
   data=coins
 }) {
   const [active, setActive] = useState(null);
-  const half = width / 3;
-  const th = width / 2;
+  const half = Math.min(width,height) / 2;
   return (
-      <svg width={width} height={height}>
-        <Group top={th-10} left={th}>
+      <svg width={width} height={height+50}>
+        <Group top={half} left={half}>
           <Pie
             data={data}
             pieValue={(v) => v.amount * v.inUSD}
             outerRadius={half}
-            innerRadius={0}
+            innerRadius={100}
             padAngle={0.01}
           >
             {(pie) => {
@@ -57,7 +56,7 @@ export default function PieChart({
               });
             }}
           </Pie>
-          {active ? (
+          {active && data.length ? (
             <>
               <Text
                 textAnchor='middle'
@@ -78,13 +77,10 @@ export default function PieChart({
             </>
           ) : (
             <>
-              <Text textAnchor='middle' fill='#fff' fontSize={40} dy={-20}>
+              <Text textAnchor='middle' fill='#aaa' fontSize={40} dy={20}>
                 {`$${Math.floor(
                   data.reduce((acc, coin) => acc + coin.amount * coin.inUSD, 0)
                 )}`}
-              </Text>
-              <Text textAnchor='middle' fill='#aaa' fontSize={20} dy={20}>
-                {`${data.length} Assets`}
               </Text>
             </>
           )}

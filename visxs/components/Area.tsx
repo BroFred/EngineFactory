@@ -46,10 +46,13 @@ import {
   const colors = {"Demand":"#0e8ff9", "Supply": "#ff6200"};
   
   
-export default function Area(){
+export default function Area({
+  width,
+  height,
+}){
     return (
       <div>
-        <XYChart height={600} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
+        <XYChart width={width} height={height} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
           <AnimatedAxis orientation="bottom"/>
           <AnimatedAxis orientation="left"/>
           <AnimatedGrid columns={false} numTicks={4} />
@@ -73,52 +76,6 @@ export default function Area(){
             )}
           />
         </XYChart>
-          <XYChart height={300} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
-            <AnimatedAxis orientation="bottom"/>
-            <AnimatedAxis orientation="left"/>
-            <AnimatedGrid columns={false} numTicks={4} />
-            <AnimatedAreaSeries dataKey="Demand" data={Demand} {...accessors}/>
-            <Tooltip
-              snapTooltipToDatumX
-              snapTooltipToDatumY
-              showVerticalCrosshair
-              showSeriesGlyphs
-              renderTooltip={({ tooltipData }) => (
-                <div style={{ padding: "4px"}}>
-                  <div style={{ marginBottom: "8px", color: colors[tooltipData.nearestDatum.key]  ,textDecoration: "underline" }}>
-                    {tooltipData.nearestDatum.key}
-                  </div>
-                  {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-                  {": "}
-                  {accessors.zAccessor(tooltipData.nearestDatum.datum)}
-                  <p>Total: {accessors.yAccessor(tooltipData.nearestDatum.datum)}</p>
-                </div>
-              )}
-            />
-          </XYChart>
-          <XYChart height={300} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
-            <AnimatedAxis orientation="bottom"/>
-            <AnimatedAxis orientation="left"/>
-            <AnimatedGrid columns={false} numTicks={4} />
-            <AnimatedAreaSeries dataKey="Supply" data={Supply} {...accessors} stroke={"red"} fill={"yellow"} fillOpacity={0.3}/>
-            <Tooltip
-              snapTooltipToDatumX
-              snapTooltipToDatumY
-              showVerticalCrosshair
-              showSeriesGlyphs
-              renderTooltip={({ tooltipData }) => (
-                <div style={{ padding: "4px"}}>
-                  <div style={{ marginBottom: "8px", color: colors[tooltipData.nearestDatum.key]  ,textDecoration: "underline" }}>
-                    {tooltipData.nearestDatum.key}
-                  </div>
-                  {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-                  {": "}
-                  {accessors.zAccessor(tooltipData.nearestDatum.datum)}
-                  <p>Total: {accessors.yAccessor(tooltipData.nearestDatum.datum)}</p>
-                </div>
-              )}
-            />
-          </XYChart>
         </div>
     )
   }
