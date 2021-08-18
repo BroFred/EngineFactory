@@ -7,7 +7,7 @@ const debounce = (ms , fn) => {
     timer = setTimeout(()=>{fn(...args)},ms); 
   }
 }
-const VegaGeneric = ({ data, options }) => {
+const VegaGeneric = ({ data, options={idx:123} }) => {
   const ref = useRef();
   const [{width, height}, setDim] = useState({width:'', height:''});
   const debounceSetDim = debounce(200, setDim);
@@ -36,7 +36,9 @@ const VegaGeneric = ({ data, options }) => {
             ...options
           };
           // Embed the visualization in the container with id `vis`
-          vegaEmbed(`#${options.idx}`, vlSpec);
+          
+          const res = vegaEmbed(`#${options.idx}`, vlSpec);
+          return ()=> res.then(({finalize})=>finalize())
         }
     },[width, height, data])
     return <div id={`${options.idx}`} ref={ref} ></div>
