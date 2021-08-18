@@ -1,13 +1,13 @@
 import { atomFamily, selectorFamily, atom } from 'recoil';
 import { jVar } from "json-variables";
-import { fromPairs, map, match, replace, values, all } from 'ramda';
-
-
+import { fromPairs, map, match, replace, values, all, isEmpty } from 'ramda';
+import { Subject, takeWhile, BehaviorSubject, takeUntil, isObservable, tap } from 'rxjs';
+export const stop$ = new Subject();
 
 export const dataSourceAtom = atomFamily(
     {
         key: 'dataSource',
-        default: {},
+        default: {}
     }
 );
 
@@ -52,6 +52,10 @@ export const tokenAtom = selectorFamily(
             });
             const reg = /\%\%\_(.*?)\_\%\%/g;
             const result = match(reg, jsonStirng);
+            //effect clean up previous sub when token or dataSource def Changes
+            if(!isEmpty(result) && !isEmpty(dataSource)){
+                stop$.next(id);
+            }
             const tokens = map((token) => {
                 const tk = replace(/\%\%\_|\_\%\%/g, '', token).split('.')[0];
                 return [tk, get(tokenMaster(tk)).value];
@@ -61,7 +65,7 @@ export const tokenAtom = selectorFamily(
     }
 );
 
-const anyIsEmpty = (tokens)=> !all((v)=>v, values(map((tk)=>!!tk.length, tokens)))
+const anyIsEmpty = (tokens)=> !all((v)=>v, values(map((tk)=>!!tk.length, tokens)));
 export const dataSelector = selectorFamily({
     key: 'data',
     get: (id) => async ({ get }) => {
@@ -84,7 +88,20 @@ export const dataSelector = selectorFamily({
             module =  await import(`/dataSources/${enginePath}.js`);
         }
         const { default: dataSourceEngine } = module;
-        const data = await dataSourceEngine(options, id);
+        const data = await dataSourceEngine(options);
+        if(isObservable(data)){
+            const results$ = new BehaviorSubject([]);
+            const src$ = data.pipe(
+                takeUntil(stop$.pipe(
+                    takeWhile(idx=> {
+                        return idx===id;
+                    })
+                ))
+            );
+            src$.subscribe(results$)
+            return (fn) => results$.subscribe(fn);
+        }
+
         return data;
     },
 });
