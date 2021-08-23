@@ -1,5 +1,5 @@
 import React from "react";
-import { XYChart, BarSeries, Axis, lightTheme, Tooltip,darkTheme } from "@visx/xychart";
+import { XYChart, BarSeries, AnimatedBarSeries, Axis, lightTheme, Tooltip,darkTheme,AnimatedAxis } from "@visx/xychart";
 import customTheme from '../customTheme';
 
 interface BarProps {
@@ -34,13 +34,17 @@ export default function Bar({
       yScale={vertical ? yConfig: xConfig}
       onPointerUp={onPointerUp}
     >
-      <Axis orientation="left" />
-      <Axis orientation="bottom" />
-      <BarSeries
+      <AnimatedAxis orientation="left" />
+      <AnimatedAxis orientation="bottom" />
+      <AnimatedBarSeries
         data={data}
         dataKey="y"
         xAccessor={(d) => vertical ? d.x : d.y}
         yAccessor={(d) => vertical ? d.y : d.x}
+        colorAccessor={(d,index)=>{
+          console.log(d,index)
+          return index=== 0 ? 'pink':'orange'
+        }}
       />
       <Tooltip
         snapTooltipToDatumX

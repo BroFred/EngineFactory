@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import Bar, { TransposedBar } from "./components/Bar";
 import { BarGrouped, BarStacked } from "./components/BarGroup";
 import Line,{ZoomLine} from "./components/Line";
-import Area from "./components/Area";
+import Area,{Area2, Area3} from "./components/Area";
 import Pie from "./components/Pie";
 import Percentage from "./components/Percentage";
+
 
 interface IChartEntry {
   name: string;
@@ -19,7 +20,6 @@ interface ChartProps {
 
 const CHARTS: IChartEntry[] = [
   { name: "Pie chart", component: Pie, key: "pie" },
-  { name: "Percentage chart", component: Percentage, key: "Percentage" },
   { name: "Bar chart", component: Bar, key: "xyBar" },
   { name: "Grouped Bars", component: BarGrouped, key: "groupBar" },
   { name: "Stacked Bars", component: BarStacked, key: "stackBar" },
@@ -27,11 +27,13 @@ const CHARTS: IChartEntry[] = [
   { name: "Line chart", component: Line, key: "line" },
   { name: "Zoom Line", component: ZoomLine, key: "Zoom Line" },
   { name: "Area chart", component: Area, key: "area" },
+  { name: "Area2 chart", component: Area2, key: "area2" },
+  { name: "Area3 chart", component: Area3, key: "area3" },
+  { name: "Percentage chart", component: Percentage, key: "Percentage" },
+
 ];
 
 const Visx = () => {
-  const [chart, setChart] = useState<string>("xyBar");
-  const selectedChart = CHARTS.find((c) => c.key === chart);
     return (
       <div>
         <h1>Visx POC</h1>
