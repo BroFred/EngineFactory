@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAtomValue } from 'jotai/utils';
+import { useObservableState } from 'observable-hooks';
 
 export const config = () => {
-    return {};
+    return null;
 }
 
 // export const Edit =  ({dataAtoms}) =>{
 //     const data = useAtomValue(dataAtoms[0]);
 //     return <div>{JSON.stringify(data)}</div>;
 // }
-
 
 const debounce = (ms, fn) => {
     let timer;
@@ -19,7 +19,8 @@ const debounce = (ms, fn) => {
     }
 }
 export const Edit = ({ dataAtoms, options = { idx: 123 } }) => {
-    const data = useAtomValue(dataAtoms[0]);
+    const { enginePath } = useAtomValue(dataAtoms[0]);
+    const data = useObservableState(enginePath, []);
     const ref = useRef();
     const [{ width, height }, setDim] = useState({ width: '', height: '' });
     const debounceSetDim = debounce(200, setDim);

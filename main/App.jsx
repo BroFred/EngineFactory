@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { dataSourceAtom, visualizationAtom, tokenMaster, layoutAtom, formAtom } from './store';
 import { forEach, map, concat } from 'ramda';
 import def from '../example/example1.json';
@@ -9,8 +9,30 @@ import FormCommon from './FormCommon';
 import { Provider } from 'jotai'
 import Ds from './CommonDataSource';
 import Viz from './CommonVisualization';
+import { useEffect } from 'react';
 
 const App = () => {
+    const [show, setShow] = useState(1);
+    // EXP CRUD dataSoucrce
+    // useEffect(
+    //     () => {
+    //         setTimeout(() => {
+    //             setShow(0)
+    //         }, 5000);
+    //         setTimeout(() => {
+    //             setShow(1)
+    //         }, 10000);
+    //         setTimeout(() => {
+    //             setShow(0)
+    //         }, 14000);
+    //         setTimeout(() => {
+    //             setShow(1)
+    //         }, 20000);
+    //         setTimeout(() => {
+    //             setShow(0)
+    //         }, 22000);
+    //     }, []
+    // )
     const initializeState = ({ set }) => {
         const { dataSource, visualization, tokens, layout, form } = def;
         set(layoutAtom, layout);
@@ -32,6 +54,13 @@ const App = () => {
     >
         <Suspense fallback={<></>}>
             <Ds {...{
+                id: "empty_stream",
+                enginePath: "stream",
+                options: {
+                    "data": []
+                }
+            }} />
+            {show && <Ds {...{
                 id: "my_stream",
                 enginePath: "stream",
                 options: {
@@ -74,7 +103,7 @@ const App = () => {
                         }
                     ]
                 }
-            }} />
+            }} />}
         </Suspense>
         <Suspense fallback={<></>}>
             <Viz {...{
@@ -82,7 +111,7 @@ const App = () => {
                 "enginePath": "Bypass",
                 "options": {
                     "dataSources": [
-                        "my_stream"
+                        "%%_my_stream_%%"
                     ],
                     "idx": "vega-2",
                     "mark": "bar",
@@ -102,6 +131,31 @@ const App = () => {
                     }
                 }
             }} />
+            {/* {show && <Viz {...{
+                "id": "my_stream_viz2",
+                "enginePath": "Bypass",
+                "options": {
+                    "dataSources": [
+                        "my_stream"
+                    ],
+                    "idx": "vega-3",
+                    "mark": "bar",
+                    "encoding": {
+                        "y": {
+                            "field": "a",
+                            "type": "nominal"
+                        },
+                        "x": {
+                            "aggregate": "average",
+                            "field": "b",
+                            "type": "quantitative",
+                            "axis": {
+                                "title": "test vega Stream"
+                            }
+                        }
+                    }
+                }
+            }} />} */}
             {/* <LayoutCommon>
                 {concat(
                     map(({ id }) => {

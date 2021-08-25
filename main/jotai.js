@@ -1,26 +1,31 @@
 import { atom } from 'jotai'
-import { atomFamily } from 'jotai/utils';
-import { map, match, replace} from 'ramda';
+import { atomFamily, useUpdateAtom } from 'jotai/utils';
+import { map, match, replace, fromPairs } from 'ramda';
 import { jVar } from "json-variables";
-import {Subject} from 'rxjs';
+import { Subject, of, takeUntil, BehaviorSubject } from 'rxjs';
+import { useEffect } from 'react';
 
 export const tokensAtom = atomFamily(({ id, value }) => {
     const valueAtom = atom({ id, value });
     return atom(
         (get) => get(valueAtom),
         (get, set, v) => {
-            set(value, { id, value: v });
+            set(valueAtom, { id, value: v });
         }
     )
 }, (a, b) => a.id === b.id);
 
-export const atomWithToken = (type='dataSources')=> atomFamily(({ options, id, enginePath }) => {
+export const atomWithToken = atomFamily(({ options, id, enginePath, type }) => {
     const def = atom(options);
     const stop$ = new Subject();
-    def.onMount = ()=> ()=>stop$.next(1);
+    const data$ = new BehaviorSubject();
+    data$.subscribe({
+        complete: ()=>console.log('rxjs killed')
+    })
     return atom(
-       async get => {
-            const {config: fn} = await import(`/@dashboard/${type}/${enginePath}.js`);
+        async get => {
+            console.log('start new')
+            const { config: fn } = await import(`/@dashboard/${type}/${enginePath}.js`);
             const config = get(def);
             const jsonStirng = JSON.stringify(config);
             const reg = /\%\%\_(.*?)\_\%\%/g;
@@ -29,34 +34,31 @@ export const atomWithToken = (type='dataSources')=> atomFamily(({ options, id, e
                 const tk = replace(/\%\%\_|\_\%\%/g, '', token).split('.')[0];
                 return [tk, tokensAtom({ id: tk })]
             }, result);
-            const tokens = map(([k, v]) => [k, get(v)], usedTokens);
+            const tokens = fromPairs(map(([k, v]) => [k, get(v).value], usedTokens));
 
             const configWithToken = jVar({
                 ...config,
                 ...tokens,
             });
-            console.log('start new')
+
+
+            (fn(configWithToken)||of(0)).pipe(takeUntil(stop$)).subscribe({
+                next : (v) => data$.next(v)
+            })
             return {
                 options: configWithToken,
-                id, enginePath: fn(configWithToken), stop$
+                id, enginePath: data$,
             };
         },
         (get, set, v) => {
-            console.log('stop stream');
             stop$.next(1);
+            console.log('stop stream');
             set(def, v);
         }
     )
 
 }, (a, b) => a.id === b.id);
 
-export const data = atomFamily((id)=>{
-    const d = atom([]);
-    return atom(
-        get => get(d),
-        (get, set, v) => set(d, v)
-    );
-});
 
 
 
