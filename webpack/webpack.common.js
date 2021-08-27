@@ -40,7 +40,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: "Alba Dashboard",
+            title: "Dashboard",
             template: path.join(__dirname, "../index.html")
         }),],
     devServer: {
