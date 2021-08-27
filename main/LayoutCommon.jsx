@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { layoutAtom } from './store'
 import {useRecoilValue} from 'recoil';
 const LayoutCommon = (props) => {

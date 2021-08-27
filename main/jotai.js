@@ -25,7 +25,7 @@ export const atomWithToken = atomFamily(({ options, id, enginePath, type }) => {
     return atom(
         async get => {
             console.log('start new')
-            const { config: fn } = await import(`/@dashboard/${type}/${enginePath}.js`);
+            const { config: fn } = await import(`@dashboard/${type}/${enginePath}`);
             const config = get(def);
             const jsonStirng = JSON.stringify(config);
             const reg = /\%\%\_(.*?)\_\%\%/g;

@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { formSelector } from './store'
 import {useRecoilValue} from 'recoil';
 const FormCommon = ({id, ...props}) => {

@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from 'React';
+import React, { lazy, useEffect } from 'react';
 import { useAtom } from 'jotai'
 import { atomWithToken } from './jotai';
 import {map} from 'ramda';
@@ -18,7 +18,7 @@ const VizCommon = ({ options, enginePath, id }) => {
     //         }), 10000);
     // },[])
     const  Comp  = lazy(async()=> {
-        const {Edit} = await import(`/@dashboard/visualization/${enginePath}.js`);
+        const {Edit} = await import(`@dashboard/visualization/${enginePath}`);
         return {default: Edit};
     });
 

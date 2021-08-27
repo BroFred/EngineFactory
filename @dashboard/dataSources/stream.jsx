@@ -7,6 +7,6 @@ export const config = ({data}) => {
 }
 
 export const Edit = ({options, setConfig}) =>{
-    return <textarea value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/>
+    return <textarea style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/>
 }
 

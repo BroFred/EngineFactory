@@ -2,7 +2,7 @@ import {
     AnimatedAxis, // any of these can be non-animated equivalents
     AnimatedLineSeries,
     XYChart,
-    Tooltip,
+    Tooltip
   } from '@visx/xychart';
 
 import React from "react";
