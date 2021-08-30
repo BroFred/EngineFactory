@@ -18,7 +18,7 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
       <ParentSize>
         {({ width, height }) => <Bar width={width} height={height} data={data}></Bar>}
       </ParentSize>
-      <textarea style={{ height: 300 }} value={JSON.stringify(options)} onChange={(e) => setConfig(JSON.parse(e.target.value))} />
+      {/* <textarea style={{ height: 300 }} value={JSON.stringify(options)} onChange={(e) => setConfig(JSON.parse(e.target.value))} /> */}
     </>
   );
 };

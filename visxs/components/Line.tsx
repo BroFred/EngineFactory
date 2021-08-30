@@ -123,7 +123,7 @@ import { Zoom } from '@visx/zoom';
           <AnimatedAxis orientation="bottom"  label="label" />
           {
             data.map((v,i)=>
-              <AnimatedLineSeries dataKey={i} data={v} {...accessors} />
+              <AnimatedLineSeries key={i} dataKey={i} data={v} {...accessors} />
             )
           }
           <Tooltip

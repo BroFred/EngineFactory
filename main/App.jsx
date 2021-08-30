@@ -4,18 +4,21 @@ import def from '../example/example1.json';
 import { Provider } from 'jotai'
 import Ds from './CommonDataSource';
 import Viz from './CommonVisualization';
+import Layout from './CommonLayout';
 
 const App = () => {
-    const { visualization, form, dataSource } = def;
+    const { visualization, layout, dataSource } = def;
     return <Provider>
-        <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            {
-                map((ds) => <Suspense key={ds.id} fallback={<></>}><Ds {...ds} /></Suspense>, dataSource)
-            }
-            {
-                map((vis) => <div style={{height: 500, width: 500}}><Suspense key={vis.id} fallback={<></>}><Viz {...vis} /></Suspense></div>, visualization)
-            }
-        </div>
+                 {
+                    map((ds) => <Suspense key={ds.id} fallback={<></>}><Ds {...ds} /></Suspense>, dataSource)
+                }
+        <Suspense fallback={<></>}>
+            <Layout {...layout}>
+                {
+                    map((vis) => <Suspense key={vis.id} fallback={<></>}><Viz {...vis} /></Suspense>, visualization)
+                }
+            </Layout>
+        </Suspense>
     </Provider>;
 }
 export default App;

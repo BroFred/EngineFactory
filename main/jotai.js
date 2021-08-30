@@ -1,12 +1,11 @@
 import { atom } from 'jotai'
-import { atomFamily, useUpdateAtom } from 'jotai/utils';
-import { map, match, replace, fromPairs } from 'ramda';
+import { atomFamily } from 'jotai/utils';
+import { map, match, replace, fromPairs, isEmpty, values, any } from 'ramda';
 import { jVar } from "json-variables";
 import { Subject, of, takeUntil, BehaviorSubject } from 'rxjs';
-import { useEffect } from 'react';
 
 export const tokensAtom = atomFamily(({ id, value }) => {
-    const valueAtom = atom({ id, value });
+    const valueAtom = atom({ id, value: value = [] });
     return atom(
         (get) => get(valueAtom),
         (get, set, v) => {
@@ -20,7 +19,7 @@ export const atomWithToken = atomFamily(({ options, id, enginePath, type }) => {
     const stop$ = new Subject();
     const data$ = new BehaviorSubject();
     data$.subscribe({
-        complete: ()=>console.log('rxjs killed')
+        complete: () => console.log('rxjs killed')
     })
     return atom(
         async get => {
@@ -36,14 +35,22 @@ export const atomWithToken = atomFamily(({ options, id, enginePath, type }) => {
             }, result);
             const tokens = fromPairs(map(([k, v]) => [k, get(v).value], usedTokens));
 
+            const anyIsEmpty = any(isEmpty)
+            if (anyIsEmpty(values(tokens))) {
+                return { 
+                    options: {},
+                    id, enginePath: of([]),
+                    isWaitingForTokens: true 
+                }
+            }
             const configWithToken = jVar({
                 ...config,
                 ...tokens,
             });
 
 
-            (fn(configWithToken)||of(0)).pipe(takeUntil(stop$)).subscribe({
-                next : (v) => data$.next(v)
+            (fn(configWithToken) || of(0)).pipe(takeUntil(stop$)).subscribe({
+                next: (v) => data$.next(v)
             })
             return {
                 options: configWithToken,

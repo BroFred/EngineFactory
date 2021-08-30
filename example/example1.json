@@ -25,29 +25,6 @@
       "value": []
     }
   ],
-  "form": [
-    {
-      "id": "my_ds_form",
-      "enginePath": "select",
-      "options": {
-        "dataSources": "gender",
-        "value": "b",
-        "label": "a",
-        "target": "value3"
-      }
-    },
-    {
-      "id": "my_nationalities_form",
-      "enginePath": "multiSelect",
-      "options": {
-        "needJoin": true,
-        "dataSources": "nationalities",
-        "value": "value",
-        "label": "label",
-        "target": "value4"
-      }
-    }
-  ],
   "layout": {
     "enginePath": "grid",
     "options": {
@@ -524,37 +501,24 @@
   ],
   "visualization": [
     {
-      "id": "my_stream_viz",
-      "enginePath": "Vega",
+      "id": "my_nationalities_form",
+      "enginePath": "multiSelect",
       "options": {
-        "dataSources": [
-          "my_stream"
-        ],
-        "idx": "vega-2",
-        "mark": "bar",
-        "encoding": {
-          "y": {
-            "field": "a",
-            "type": "nominal"
-          },
-          "x": {
-            "aggregate": "average",
-            "field": "b",
-            "type": "quantitative",
-            "axis": {
-              "title": "131232"
-            }
-          }
-        }
+        "needJoin": true,
+        "dataSources": ["nationalities"],
+        "tokens": ["value4"],
+        "value": "value",
+        "label": "label"
       }
     },
     {
-      "id": "my_viz",
-      "enginePath": "Bypass",
+      "id": "my_ds_form",
+      "enginePath": "select",
       "options": {
-        "dataSources": [
-          "my_ds"
-        ]
+        "dataSources": ["gender"],
+        "tokens": ["value3"],
+        "value": "b",
+        "label": "a"
       }
     },
     {
@@ -576,7 +540,7 @@
             "field": "b",
             "type": "quantitative",
             "axis": {
-              "title": "131232"
+              "title": "%%_value4.0_%%"
             }
           }
         }

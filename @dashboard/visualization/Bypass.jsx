@@ -11,6 +11,8 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
     const data = useObservableState(enginePath, []);
     return <><div>{
         JSON.stringify(data)
-    }</div><textarea style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/></>
+    }</div>
+    {/* <textarea style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/> */}
+    </>
 }
 

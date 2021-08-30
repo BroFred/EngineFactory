@@ -31,7 +31,7 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
           <Line width={width} height={height} data={other} />
         }
       </ParentSize>
-      <textarea style={{ height: 300 }} value={JSON.stringify(options)} onChange={(e) => setConfig(JSON.parse(e.target.value))} />
+      {/* <textarea style={{ height: 300 }} value={JSON.stringify(options)} onChange={(e) => setConfig(JSON.parse(e.target.value))} /> */}
     </>
 
   )

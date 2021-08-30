@@ -55,5 +55,7 @@ export const Edit = ({ dataAtoms, options = { idx: 123 }, setConfig }) => {
         }
     }, [width, height, data])
     return <><div id={`${options.idx}`} ref={ref} >
-    </div><textarea style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/></>
+    </div>
+    {/* <textarea style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/> */}
+    </>
 }
