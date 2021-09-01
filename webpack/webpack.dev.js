@@ -11,5 +11,6 @@ module.exports = merge(
     output: {
       filename: 'static/js/[name].[contenthash:8].js',
       chunkFilename: 'static/js/[name].[contenthash:8].js',
-    }
-  });
+    },
+  },
+);

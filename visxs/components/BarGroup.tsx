@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   XYChart,
   BarSeries,
@@ -6,16 +6,16 @@ import {
   BarStack,
   Axis,
   lightTheme,
-  Tooltip
-} from "@visx/xychart";
-import { getSeededRandom, genBins } from "@visx/mock-data";
+  Tooltip,
+} from '@visx/xychart';
+import { getSeededRandom, genBins } from '@visx/mock-data';
 
 const groupLength = 100;
 
 interface BarProps {
   height: number;
   width: number;
-  groupType: "group" | "stack";
+  groupType: 'group' | 'stack';
   onPointerUp?: ()=>void
 }
 
@@ -39,14 +39,14 @@ function BaseChart({
 }: BarProps) {
   const numGroups = Math.max(Math.floor(width / groupLength), 3);
   const data = useMemo(() => genData(numGroups), [numGroups]);
-  const GroupType = groupType === "group" ? BarGroup : BarStack;
+  const GroupType = groupType === 'group' ? BarGroup : BarStack;
   return (
     <XYChart
       theme={lightTheme}
       width={width}
       height={height}
-      yScale={{ type: "linear" }}
-      xScale={{ type: "band", padding: 0.1 }}
+      yScale={{ type: 'linear' }}
+      xScale={{ type: 'band', padding: 0.1 }}
       onPointerUp={onPointerUp}
     >
       <Axis orientation="bottom" />

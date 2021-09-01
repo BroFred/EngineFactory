@@ -1,5 +1,7 @@
-import React from "react";
-import { XYChart, BarSeries, Axis, lightTheme, Tooltip,darkTheme } from "@visx/xychart";
+import React from 'react';
+import {
+  XYChart, BarSeries, Axis, lightTheme, Tooltip, darkTheme,
+} from '@visx/xychart';
 import customTheme from '../customTheme';
 
 interface BarProps {
@@ -10,18 +12,17 @@ interface BarProps {
   onPointerUp?: ()=>void
 }
 
-const test = 
-[{ "x": "ShangHai", "y": 4 },
-{ "x": "BeiJing", "y": 10 },
-{ "x": "JiangSu", "y": 15 },
-{ "x": "Hubei", "y": 23 }]
+const test = [{ x: 'ShangHai', y: 4 },
+  { x: 'BeiJing', y: 10 },
+  { x: 'JiangSu', y: 15 },
+  { x: 'Hubei', y: 23 }];
 
 export default function Bar({
   width,
   height,
-  vertical=true,
+  vertical = true,
   onPointerUp,
-  data=test
+  data = test,
 }: BarProps) {
   const xConfig = { type: 'band', paddingInner: 0.3 } as const;
   const yConfig = { type: 'linear' } as const;
@@ -30,8 +31,8 @@ export default function Bar({
       theme={lightTheme}
       height={height}
       width={width}
-      xScale={vertical ? xConfig: yConfig}
-      yScale={vertical ? yConfig: xConfig}
+      xScale={vertical ? xConfig : yConfig}
+      yScale={vertical ? yConfig : xConfig}
       onPointerUp={onPointerUp}
     >
       <Axis orientation="left" />
@@ -39,18 +40,20 @@ export default function Bar({
       <BarSeries
         data={data}
         dataKey="y"
-        xAccessor={(d) => vertical ? d.x : d.y}
-        yAccessor={(d) => vertical ? d.y : d.x}
+        xAccessor={(d) => (vertical ? d.x : d.y)}
+        yAccessor={(d) => (vertical ? d.y : d.x)}
       />
       <Tooltip
         snapTooltipToDatumX
         snapTooltipToDatumY
         showVerticalCrosshair
         showSeriesGlyphs
-        renderTooltip={({tooltipData}) => (
-          <p>{
+        renderTooltip={({ tooltipData }) => (
+          <p>
+            {
             `Stuff: ${tooltipData?.nearestDatum.datum.y}`
-          }</p>
+          }
+          </p>
         )}
       />
     </XYChart>

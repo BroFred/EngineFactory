@@ -1,5 +1,5 @@
 {
-  "tokens": [
+  "variables": [
     {
       "id": "value",
       "value": [
@@ -506,7 +506,7 @@
       "options": {
         "needJoin": true,
         "dataSources": ["nationalities"],
-        "tokens": ["value4"],
+        "variables": ["value4"],
         "value": "value",
         "label": "label"
       }
@@ -516,7 +516,7 @@
       "enginePath": "select",
       "options": {
         "dataSources": ["gender"],
-        "tokens": ["value3"],
+        "variables": ["value3"],
         "value": "b",
         "label": "a"
       }

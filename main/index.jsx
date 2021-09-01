@@ -3,5 +3,6 @@ import ReactDOM from 'react-dom';
 import BasicRoute from '../routes';
 
 ReactDOM.render(
-    <BasicRoute />
-    , document.getElementById('root'));
+  <BasicRoute />,
+  document.getElementById('root'),
+);
