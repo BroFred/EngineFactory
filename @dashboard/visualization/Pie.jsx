@@ -19,7 +19,7 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
       <ParentSize>
         {({ width, height }) => <Pie width={width} height={height} data={originData} />}
       </ParentSize>
-      {/* <textarea style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/> */}
+      {/* <textarea onMouseDown={(e)=>e.stopPropagation()} style={{height: 300}} value={JSON.stringify(options)} onChange={(e)=>setConfig( JSON.parse(e.target.value))}/> */}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { atomFamily } from 'jotai/utils';
+import { atomFamily, atomWithReset } from 'jotai/utils';
 import {
   map, match, replace, fromPairs, isEmpty, values, any, pair,
 } from 'ramda';
@@ -8,6 +8,8 @@ import {
   Subject, of, takeUntil, BehaviorSubject,
 } from 'rxjs';
 import { baseDefinitionProps, variablesItem, baseDefinitionItem } from '@example/definition';
+
+export const definitionAtom = atomWithReset<Record<string, any>>({});
 
 export const variablesAtom = atomFamily(({ id, value }: variablesItem) => {
   const valueAtom = atom({ id, value: value ?? [] });
@@ -31,7 +33,8 @@ export const atomWithVariable = atomFamily(({
     complete: () => console.log('rxjs killed'),
   });
   return atom(
-    async (get): Promise<baseDefinitionProps & { isWaitingForVariables?: boolean }> => {
+    async (get): Promise<baseDefinitionProps
+    & { isWaitingForVariables?: boolean; enginePathRaw: string }> => {
       console.log('start new');
       const { config: fn } = await import(`@dashboard/${type}/${enginePath}`);
       const config = get(def);
@@ -50,6 +53,7 @@ export const atomWithVariable = atomFamily(({
           options: {},
           id,
           enginePath: data$,
+          enginePathRaw: enginePath,
           isWaitingForVariables: true,
         };
       }
@@ -64,6 +68,7 @@ export const atomWithVariable = atomFamily(({
       return {
         options: configWithVariable,
         id,
+        enginePathRaw: enginePath,
         enginePath: data$,
       };
     },
