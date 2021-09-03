@@ -28,6 +28,7 @@ module.exports = {
   },
   module: {
     rules: [
+      {test: /\.worker\.ts$/, loader: 'worker-loader'},
       {
         test: /\.(t|j)sx?$/,
         loader: 'esbuild-loader',
