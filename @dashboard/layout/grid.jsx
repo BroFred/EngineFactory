@@ -3,6 +3,7 @@ import {
   sortBy, zip, prop, map,
 } from 'ramda';
 import GridLayout, { WidthProvider } from 'react-grid-layout';
+import 'react-grid-layout/css/styles.css';
 
 const Child = forwardRef((props, ref) => <div ref={ref} {...props} />);
 const RGL = WidthProvider(GridLayout);

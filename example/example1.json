@@ -98,6 +98,13 @@
           "x": 0,
           "y": 13,
           "i": "mult_Line"
+        },
+        {
+          "w": 10,
+          "h": 10,
+          "x": 0,
+          "y": 45,
+          "i": "my_editor"
         }
       ]
     }
@@ -592,6 +599,13 @@
           "my_mult_line",
           "my_stream_line"
         ]
+      }
+    },
+    {
+      "id": "my_editor",
+      "enginePath": "Monaco",
+      "options": {
+        "dataSources": []
       }
     }
   ]

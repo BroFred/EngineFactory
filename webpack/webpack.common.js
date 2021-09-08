@@ -2,6 +2,7 @@ const hq = require('alias-hq');
 
 const alias = hq.get('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 const path = require('path');
 
@@ -43,7 +44,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Dashboard',
       template: path.join(__dirname, '../index.html'),
-    })],
+    }),
+    new ModuleFederationPlugin({
+      name: 'host'
+    })
+  ],
   devServer: {
     static: {
       directory: path.join(__dirname, '../index.html'),

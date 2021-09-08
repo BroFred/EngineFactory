@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { map } from 'ramda';
 import { Provider } from 'jotai';
 import { baseDefinitionItem } from '@example/definition';
@@ -7,6 +7,7 @@ import def from '../example/example1.json';
 import Ds from './CommonDataSource';
 import Viz from './CommonVisualization';
 import Layout from './CommonLayout';
+
 import { definitionAtom } from './jotai';
 
 const App: React.FC<{}> = () => {
@@ -15,7 +16,6 @@ const App: React.FC<{}> = () => {
     visualization: baseDefinitionItem[],
     layout: baseDefinitionItem,
     dataSource: baseDefinitionItem[] } = def;
-
   return (
     <Provider initialValues={[[definitionAtom, { visualization, layout, dataSource }]]}>
       {
