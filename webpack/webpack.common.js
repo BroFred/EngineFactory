@@ -3,6 +3,8 @@ const hq = require('alias-hq');
 const alias = hq.get('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const pjson = require('../package.json');
+const deps = pjson.dependencies;
 
 const path = require('path');
 
@@ -14,7 +16,7 @@ const PATHS = {
 };
 
 module.exports = {
-  entry: path.resolve(PATHS.local, './main/index.jsx'),
+  entry: path.resolve(PATHS.local, './main/bootstrap.ts'),
   output: {
     publicPath: 'auto',
     path: path.resolve(PATHS.local, 'build'),
@@ -46,15 +48,39 @@ module.exports = {
       template: path.join(__dirname, '../index.html'),
     }),
     new ModuleFederationPlugin({
-      name: 'host'
+      name: 'Platform',
+      filename: 'remoteEntry.js',
+      remotes:{
+        slave: 'slave@http://localhost:8080/remoteEntry.js',
+        'Platform': 'Platform@/remoteEntry.js',
+      },
+      exposes:{
+        './state': "@main/jotai"
+      },
+      shared: {
+        ...deps,
+        jotai: {
+          singleton: true,
+          requiredVersion: deps.jotai,
+        },
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"],
+        },
+      },
     })
   ],
   devServer: {
     static: {
       directory: path.join(__dirname, '../index.html'),
     },
+    hot: false,
     host: process.env.HOST, // Defaults to `localhost` port: process.env.PORT, // Defaults to 8080
     open: true, // Open the page in browser
-    port: process.env.PORT,
+    port: '8081',
   },
 };

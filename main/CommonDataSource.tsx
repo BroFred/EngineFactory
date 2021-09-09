@@ -4,7 +4,7 @@ import React, {
 import { useAtom } from 'jotai';
 import { useUpdateAtom, useAtomCallback } from 'jotai/utils';
 import { baseDefinitionItem } from '@example/definition';
-import { atomWithVariable, variablesAtom, definitionAtom } from './jotai';
+import { atomWithVariable, variablesAtom, definitionAtom } from 'Platform/state';
 import { removeItem as removeDs, addItem as addDs } from './utils';
 
 const DataSourceCommon: React.FC<baseDefinitionItem> = ({ options, enginePath, id }) => {

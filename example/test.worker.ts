@@ -1,7 +1,6 @@
 import {
   match, map, pair, replace,
 } from 'ramda';
-import { variablesAtom } from '@main/jotai';
 
 const ctx: Worker = self as any;
 

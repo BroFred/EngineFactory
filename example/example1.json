@@ -603,9 +603,12 @@
     },
     {
       "id": "my_editor",
-      "enginePath": "Monaco",
+      "enginePath": "@remote/Monaco",
+      "fallbackEnginePath": "Bypass",
       "options": {
-        "dataSources": []
+        "dataSources": [
+          "my_rest"
+        ]
       }
     }
   ]

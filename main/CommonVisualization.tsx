@@ -5,10 +5,43 @@ import { useAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { map } from 'ramda';
 import { baseDefinitionItem } from '@example/definition';
-import { removeItem as removeViz, addItem as addViz } from './utils';
-import { atomWithVariable, variablesAtom, definitionAtom } from './jotai';
+import { atomWithVariable, variablesAtom, definitionAtom } from 'Platform/state';
+import {
+  removeItem as removeViz, addItem as addViz, isRemoteHost, loadComponent, getRemoteModule,
+} from './utils';
 
-const VizCommon = ({ options, enginePath, id }:baseDefinitionItem):JSX.Element => {
+class Edit extends React.Component {
+  state = { hasError: false };
+
+  Comp = lazy(async () => {
+    const { Edit: Comp } = (isRemoteHost(this.props.enginePath)
+      ? await loadComponent('slave', `./${getRemoteModule(this.props.enginePath)}`)()
+      : await import(`@dashboard/visualization/${this.props.enginePath}`));
+    return { default: Comp };
+  });
+
+  Fallback = lazy(async () => {
+    const { Edit: Comp } = await import(`@dashboard/visualization/${this.props.fallbackEnginePath}`);
+    return { default: Comp };
+  });
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <this.Fallback {...this.props} />;
+    }
+    return <this.Comp {...this.props} />;
+  }
+}
+
+const VizCommon = ({
+  options, enginePath, id, fallbackEnginePath,
+}:baseDefinitionItem):JSX.Element => {
   const didMountRef = useRef(false);
   const [config, setConfig] = useAtom(atomWithVariable({
     options, enginePath, id, type: 'visualization',
@@ -44,13 +77,11 @@ const VizCommon = ({ options, enginePath, id }:baseDefinitionItem):JSX.Element =
     config.options.dataSources || [],
   );
   const tkAtoms = map((tk) => variablesAtom({ id: tk }), config.options.variables || []);
-  const Comp = lazy(async () => {
-    const { Edit } = await import(`@dashboard/visualization/${enginePath}`);
-    return { default: Edit };
-  });
 
   return (
-    <Comp
+    <Edit
+      enginePath={enginePath}
+      fallbackEnginePath={fallbackEnginePath}
       options={config.options}
       setConfig={setConfig}
       dataAtoms={dsAtoms}

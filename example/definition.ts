@@ -2,6 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface baseDefinitionItem {
   enginePath: string;
+  fallbackEnginePath?: string;
   options: {
     [key:string] : any;
     dataSource: string[];

@@ -3,12 +3,11 @@ import { map } from 'ramda';
 import { Provider } from 'jotai';
 import { baseDefinitionItem } from '@example/definition';
 import Show from '@example/showDefinition';
+import { definitionAtom } from 'Platform/state';
 import def from '../example/example1.json';
 import Ds from './CommonDataSource';
 import Viz from './CommonVisualization';
 import Layout from './CommonLayout';
-
-import { definitionAtom } from './jotai';
 
 const App: React.FC<{}> = () => {
   const { visualization, layout, dataSource }:
@@ -17,7 +16,9 @@ const App: React.FC<{}> = () => {
     layout: baseDefinitionItem,
     dataSource: baseDefinitionItem[] } = def;
   return (
-    <Provider initialValues={[[definitionAtom, { visualization, layout, dataSource }]]}>
+    <Provider
+      initialValues={[[definitionAtom, { visualization, layout, dataSource }]]}
+    >
       {
             map(
               (ds) => <Suspense key={ds.id} fallback={<></>}><Ds {...ds} /></Suspense>, dataSource,

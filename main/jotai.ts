@@ -8,20 +8,7 @@ import {
   Subject, of, takeUntil, BehaviorSubject,
 } from 'rxjs';
 import { baseDefinitionProps, variablesItem, baseDefinitionItem } from '@example/definition';
-import { isRemoteHost } from './utils';
-
-function loadComponent(scope, module) {
-  return async () => {
-    // Initializes the shared scope. Fills it with known provided modules from this build and all remotes
-    await __webpack_init_sharing__('default');
-    const container = window[scope]; // or get the container somewhere else
-    // Initialize the container, it may provide shared modules
-    await container.init(__webpack_share_scopes__.default);
-    const factory = await window[scope].get(module);
-    const Module = factory();
-    return Module;
-  };
-}
+import { isRemoteHost, loadComponent, getRemoteModule } from './utils';
 
 export const definitionAtom = atomWithReset<Record<string, any>>({});
 
@@ -50,9 +37,14 @@ export const atomWithVariable = atomFamily(({
     async (get): Promise<baseDefinitionProps
     & { isWaitingForVariables?: boolean; enginePathRaw: string }> => {
       console.log('start new');
-      const { config: fn } = isRemoteHost(enginePath)
-        ? await loadComponent('@remote', enginePath)
-        : await import(`@dashboard/${type}/${enginePath}`);
+      let fn;
+      try {
+        fn = (isRemoteHost(enginePath)
+          ? await loadComponent('slave', `./${getRemoteModule(enginePath)}`)()
+          : await import(`@dashboard/${type}/${enginePath}`)).config;
+      } catch (error) {
+        fn = () => null;
+      }
 
       const config = get(def);
       const jsonStirng = JSON.stringify(config);
@@ -79,7 +71,9 @@ export const atomWithVariable = atomFamily(({
         ...variables,
       });
 
-      (fn(configWithVariable) || of(0)).pipe(takeUntil(stop$)).subscribe({
+      const dataTemp$ = await fn(configWithVariable);
+
+      (dataTemp$ || of(0)).pipe(takeUntil(stop$)).subscribe({
         next: (v) => data$.next(v),
       });
       return {
