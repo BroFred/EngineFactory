@@ -10,6 +10,7 @@ import {
   removeItem as removeViz, addItem as addViz, isRemoteHost, loadComponent, getRemoteModule,
 } from './utils';
 
+// fallback Viz here, you can specify fallbackEnginePath to declare fallback comp
 class Edit extends React.Component {
   state = { hasError: false };
 

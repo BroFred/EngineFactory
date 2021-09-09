@@ -18,3 +18,6 @@ export interface variablesItem {
   id: string;
   value?: string[];
 }
+
+// if enginePath Start with @remote, it will automatcally fetch remote @dashboard
+// if fetch failed it will fallback

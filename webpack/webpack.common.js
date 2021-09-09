@@ -50,6 +50,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'Platform',
       filename: 'remoteEntry.js',
+      //if all federated Comp use the same copy of jotai, state will be shared  within App(Platform/State)
       remotes:{
         slave: 'slave@http://localhost:8080/remoteEntry.js',
         'Platform': 'Platform@/remoteEntry.js',
