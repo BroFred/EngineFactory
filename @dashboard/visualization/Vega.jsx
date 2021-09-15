@@ -52,7 +52,7 @@ export const Edit = ({ dataAtoms, options = { idx: 123 }, setConfig }) => {
       const res = vegaEmbed(`#${options.idx}`, vlSpec);
       return () => res.then(({ finalize }) => finalize());
     }
-  }, [width, height, data]);
+  }, [width, height, data, options]);
   return (
     <>
       <div id={`${options.idx}`} ref={ref} />
