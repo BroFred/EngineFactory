@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import Line from 'root/visxs/components/Line';
-import { useAtomValue } from 'jotai/utils';
+import { useAtomValue, waitForAll } from 'jotai/utils';
 import { useObservableState } from 'observable-hooks';
 import { ParentSize } from '@visx/responsive';
-import { map, addIndex, update } from 'ramda';
+import { map } from 'ramda';
+import { combineLatest } from 'rxjs';
 
-const mapWithIndex = addIndex(map);
-const MultiAtom = ({ dataAtom, setData }) => {
-  const { enginePath } = useAtomValue(dataAtom);
-  const data = useObservableState(enginePath, []);
-  useEffect(() => {
-    setData(data);
-  }, [data]);
-  return <></>;
-};
 export const Edit = ({ dataAtoms, options, setConfig }) => {
-  const [other, setOther] = useState([]);
+  const data = useAtomValue(waitForAll(dataAtoms));
+  const dataMemo$ = useMemo(() => combineLatest(map(({ enginePath }) => enginePath, data)), [data]);
+
+  const other = useObservableState(
+    dataMemo$, [],
+  );
 
   return (
     <>
-      {
-        mapWithIndex((da, index) => (
-          <MultiAtom
-            key={index}
-            dataAtom={da}
-            setData={(v) => {
-              other[index] = v;
-              setOther(map((v) => v || [], [...other]));
-            }}
-          />
-        ), dataAtoms)
-      }
       <ParentSize>
         {({ width, height }) => <Line width={width} height={height} data={other} />}
       </ParentSize>
