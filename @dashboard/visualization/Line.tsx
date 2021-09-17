@@ -5,15 +5,10 @@ import { useObservableState } from 'observable-hooks';
 import { ParentSize } from '@visx/responsive';
 import { map } from 'ramda';
 import { combineLatest } from 'rxjs';
+import useDataSources from './utils/useDataSources';
 
 export const Edit = ({ dataAtoms, options, setConfig }) => {
-  const data = useAtomValue(waitForAll(dataAtoms));
-  const dataMemo$ = useMemo(() => combineLatest(map(({ enginePath }) => enginePath, data)), [data]);
-
-  const other = useObservableState(
-    dataMemo$, [],
-  );
-
+  const other = useDataSources(dataAtoms);
   return (
     <>
       <ParentSize>
