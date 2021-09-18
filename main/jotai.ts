@@ -25,9 +25,10 @@ export const variablesAtom = atomFamily(({ id, value }: variablesItem) => {
 type atomType = 'dataSources' | 'visualization';
 
 export const atomWithVariable = atomFamily(({
-  options, id, enginePath, type,
+  options, id, enginePath: ep, type,
 }: baseDefinitionItem & { type: atomType }) => {
   const def = atom(options);
+  const epAtom = atom(ep);
   const stop$ = new Subject();
   const data$ = new BehaviorSubject<any[]>([]);
   data$.subscribe({
@@ -36,6 +37,7 @@ export const atomWithVariable = atomFamily(({
   return atom(
     async (get): Promise<baseDefinitionProps
     & { isWaitingForVariables?: boolean; enginePathRaw: string }> => {
+      const enginePath = get(epAtom);
       console.log('start new');
       let fn;
       try {
@@ -83,10 +85,15 @@ export const atomWithVariable = atomFamily(({
         enginePath: data$,
       };
     },
-    (get, set, v: Record<string, unknown>) => {
+    (get, set, { enginePath, options }: Record<string, unknown>) => {
       stop$.next(1);
       console.log('stop stream');
-      set(def, v);
+      if (enginePath) {
+        set(epAtom, enginePath);
+      }
+      if (options) {
+        set(def, options);
+      }
     },
   );
 }, (a, b) => a.id === b.id);

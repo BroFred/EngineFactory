@@ -14,35 +14,36 @@ import {
 class Edit extends React.Component {
   state = { hasError: false };
 
-  Comp = lazy(async () => {
-    const { Edit: Comp } = (isRemoteHost(this.props.enginePath)
-      ? await loadComponent('slave', `./${getRemoteModule(this.props.enginePath)}`)()
-      : await import(`@dashboard/visualization/${this.props.enginePath}`));
-    return { default: Comp };
-  });
-
-  Fallback = lazy(async () => {
-    const { Edit: Comp } = await import(`@dashboard/visualization/${this.props.fallbackEnginePath}`);
-    return { default: Comp };
-  });
-
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
   render() {
+    const Comp = lazy(async () => {
+      const { Edit: Cp } = (isRemoteHost(this.props.enginePath)
+        ? await loadComponent('slave', `./${getRemoteModule(this.props.enginePath)}`)()
+        : await import(`@dashboard/visualization/${this.props.enginePath}`));
+      return { default: Cp };
+    });
+
+    const Fallback = lazy(async () => {
+      const { Edit: Cp } = await import(`@dashboard/visualization/${this.props.fallbackEnginePath}`);
+      return { default: Cp };
+    });
+
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <this.Fallback {...this.props} />;
+      return <Fallback {...this.props} />;
     }
-    return <this.Comp {...this.props} />;
+    return <Comp {...this.props} />;
   }
 }
 
 const VizCommon = ({
   options, enginePath, id, fallbackEnginePath,
 }:baseDefinitionItem):JSX.Element => {
+  console.log('called');
   const didMountRef = useRef(false);
   const [config, setConfig] = useAtom(atomWithVariable({
     options, enginePath, id, type: 'visualization',
@@ -81,10 +82,10 @@ const VizCommon = ({
 
   return (
     <Edit
-      enginePath={enginePath}
+      enginePath={config.enginePathRaw}
       fallbackEnginePath={fallbackEnginePath}
       options={config.options}
-      setConfig={setConfig}
+      setConfig={(options, enginePath) => setConfig({ options, enginePath })}
       dataAtoms={dsAtoms}
       variableAtoms={tkAtoms}
     />

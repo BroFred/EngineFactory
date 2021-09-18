@@ -48,7 +48,12 @@ const DataSourceCommon: React.FC<baseDefinitionItem> = ({ options, enginePath, i
       // EXP this leak variable memory which is minimal
     };
   }, []);
-  return <Comp options={config.options} setConfig={setConfig} />;
+  return (
+    <Comp
+      options={config.options}
+      setConfig={(options, enginePath) => setConfig({ options, enginePath })}
+    />
+  );
 };
 
 export default DataSourceCommon;
