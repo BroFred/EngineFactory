@@ -4,7 +4,7 @@ import { useObservableState } from 'observable-hooks';
 import { waitForAll, useAtomValue } from 'jotai/utils';
 import { Atom } from 'jotai';
 import { map } from 'ramda';
-import { baseDefinitionProps } from '../../../example/definition';
+import { baseDefinitionProps } from '../../example/definition';
 
 const useDataSources = (dataSources: Atom<baseDefinitionProps>[]) => {
   const data$ = useAtomValue(waitForAll(dataSources));

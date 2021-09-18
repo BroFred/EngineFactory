@@ -112,7 +112,7 @@
   "dataSource": [
     {
       "id": "gender",
-      "enginePath": "json",
+      "enginePath": "ws",
       "options": {
         "data": [
           {

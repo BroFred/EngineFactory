@@ -21,7 +21,11 @@ const App: React.FC<{}> = () => {
     >
       {
             map(
-              (ds) => <Suspense key={ds.id} fallback={<></>}><Ds {...ds} /></Suspense>, dataSource,
+              (ds) => (
+                <Suspense key={ds.id} fallback={<></>}>
+                  <Ds key={ds.id} {...ds} />
+                </Suspense>
+              ), dataSource,
             )
         }
       <Suspense fallback={<></>}>

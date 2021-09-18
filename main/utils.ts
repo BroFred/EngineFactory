@@ -8,7 +8,7 @@ export const addItem = ({ id, options, enginePath }:baseDefinitionItem,
 :baseDefinitionItem[] => [{ id, options, enginePath }, ...items];
 
 export const isRemoteHost = (enginePath: string) => startsWith('@remote', enginePath);
-export const getRemoteModule = (enginePath: string) => replace('@remote/', '', enginePath)
+export const getRemoteModule = (enginePath: string) => replace('@remote/', '', enginePath);
 export const myScope = Symbol();
 
 export function loadComponent(scope, module) {

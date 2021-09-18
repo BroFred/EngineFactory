@@ -5,7 +5,7 @@ import { useObservableState } from 'observable-hooks';
 import { ParentSize } from '@visx/responsive';
 import { map } from 'ramda';
 import { combineLatest } from 'rxjs';
-import useDataSources from './utils/useDataSources';
+import useDataSources from '@main/utils/useDataSources';
 
 export const Edit = ({ dataAtoms, options, setConfig }) => {
   const other = useDataSources(dataAtoms);

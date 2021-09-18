@@ -56,7 +56,10 @@
     "react-use": "^17.2.4",
     "react-vega": "^7.4.3",
     "recoil": "^0.3.1",
+    "request": "2.79.0",
     "rxjs": "^7.3.0",
+    "socket.io": "^4.2.0",
+    "socket.io-client": "^4.2.0",
     "vega": "^5.20.2",
     "vega-lite": "^5.1.0"
   }

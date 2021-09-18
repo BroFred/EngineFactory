@@ -56,7 +56,8 @@ module.exports = {
         'Platform': 'Platform@/remoteEntry.js',
       },
       exposes:{
-        './state': "@main/jotai"
+        './state': "@main/jotai",
+        './connection': "@main/connection",
       },
       shared: {
         ...deps,
