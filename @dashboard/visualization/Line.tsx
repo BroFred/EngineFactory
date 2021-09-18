@@ -1,11 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Line from 'root/visxs/components/Line';
-import { useAtomValue, waitForAll } from 'jotai/utils';
-import { useObservableState } from 'observable-hooks';
 import { ParentSize } from '@visx/responsive';
-import { map } from 'ramda';
-import { combineLatest } from 'rxjs';
-import useDataSources from '@main/utils/useDataSources';
+import useDataSources from '@main/tools/useDataSources';
 
 export const Edit = ({ dataAtoms, options, setConfig }) => {
   const other = useDataSources(dataAtoms);
