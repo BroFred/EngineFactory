@@ -104,12 +104,38 @@
           "h": 10,
           "x": 0,
           "y": 45,
-          "i": "my_editor"
+          "i": "stream_data_grid"
         }
       ]
     }
   },
   "dataSource": [
+    {
+      "id": "stream_grid",
+      "enginePath": "stream",
+      "options":{
+        "data": [
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3],
+          [1,2,3]
+        ]
+      }
+    },
     {
       "id": "gender",
       "enginePath": "ws",
@@ -609,6 +635,13 @@
         "dataSources": [
           "my_rest"
         ]
+      }
+    },
+    {
+      "id":"stream_data_grid",
+      "enginePath": "Table",
+      "options": {
+        "dataSources": ["stream_grid"]
       }
     }
   ]

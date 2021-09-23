@@ -5,6 +5,7 @@ import { useAtomValue } from 'jotai/utils';
 import { baseDefinitionItem } from '@example/definition';
 import Show from '@example/showDefinition';
 import { definitionAtom } from 'Platform/state';
+import { ChakraProvider } from '@chakra-ui/react';
 import def from '../example/example1.json';
 import Ds from './CommonDataSource';
 import Viz from './CommonVisualization';
@@ -63,13 +64,15 @@ const App: React.FC<{}> = () => {
     layout: baseDefinitionItem,
     dataSource: baseDefinitionItem[] } = def;
   return (
-    <Provider
-      initialValues={[[definitionAtom, { visualization, layout, dataSource }]]}
-    >
-      <DataSources />
-      <Visualization />
-      <Show />
-    </Provider>
+    <ChakraProvider>
+      <Provider
+        initialValues={[[definitionAtom, { visualization, layout, dataSource }]]}
+      >
+        <DataSources />
+        <Visualization />
+        <Show />
+      </Provider>
+    </ChakraProvider>
   );
 };
 export default App;

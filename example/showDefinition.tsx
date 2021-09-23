@@ -25,7 +25,6 @@ const Show = () => {
         return pair(tk, variablesAtom({ id: tk }));
       }, answer);
       const res = map(([key, v]) => get(v), usedVariables);
-      console.log(res);
     };
   }, []));
   return (

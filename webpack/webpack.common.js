@@ -21,6 +21,7 @@ module.exports = {
     publicPath: 'auto',
     path: path.resolve(PATHS.local, 'build'),
   },
+  devtool: 'source-map',
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.tsx', '.ts'],
     modules: [path.resolve(PATHS.root, 'node_modules')],
