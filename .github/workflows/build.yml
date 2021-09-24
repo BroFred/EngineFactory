@@ -28,6 +28,7 @@ jobs:
       if: steps.yarn-cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install
     - name: Yarn build
+      run: yarn build
     - name: Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
