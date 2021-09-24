@@ -28,8 +28,9 @@ jobs:
       run: yarn install
     - name: Yarn build
       run: yarn build
+    - name: zip file
+      run: zip -r build.zip build
     - name: Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: engines
-        path: public/build
+        name: build.zip
