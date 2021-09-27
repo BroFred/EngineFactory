@@ -1,5 +1,9 @@
 import { baseDefinitionItem } from '@example/definition';
 import { dropWhile, startsWith, replace } from 'ramda';
+import { Observable } from 'rxjs';
+import Worker from 'Platform/commonWorker';
+import serialize from 'serialize-javascript';
+import { finalize } from 'rxjs/operators';
 
 export const removeItem = (idx:string, items:baseDefinitionItem[])
 :baseDefinitionItem[] => dropWhile(({ id }) => id === idx, items);
@@ -23,3 +27,29 @@ export function loadComponent(scope, module) {
     return Module;
   };
 }
+
+export const woker$ = ({ trans, input$ }) => {
+  const worker = new Worker();
+  const sub = input$.subscribe((data) => {
+    worker.postMessage({
+      transform: serialize({
+        trans: (data) => data,
+      }),
+      data,
+    });
+  });
+
+  const data$ = new Observable(((subscriber) => {
+    worker.onmessage = ({ data }) => {
+      subscriber.next(data);
+    };
+  }));
+
+  return data$.pipe(
+    finalize(() => {
+      console.log('closed');
+      worker.terminate();
+      sub.unsubscribe();
+    }),
+  );
+};

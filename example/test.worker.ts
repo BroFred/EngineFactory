@@ -1,16 +1,18 @@
-import {
-  match, map, pair, replace,
-} from 'ramda';
+import serialize from 'serialize-javascript';
+import {take} from 'ramda';
 
 const ctx: Worker = self as any;
-
-ctx.onmessage = ({ data: def }) => {
-  const reg = /%%_(.*?)_%%/g;
-  const jsonStirng = JSON.stringify(def);
-  const result = match(reg, jsonStirng);
-  ctx.postMessage({
-    answer: result,
-  });
+function deserialize(serializedJavascript) {
+  return eval(`(${serializedJavascript})`);
+}
+ctx.onmessage = ({
+  data: {
+    transform,
+    data,
+  },
+}) => {
+  const { trans } = deserialize(serialize(deserialize(transform)));
+  ctx.postMessage(trans(take(5, data)));
 };
 
 export default null as any;

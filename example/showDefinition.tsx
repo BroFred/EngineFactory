@@ -4,7 +4,9 @@ import React, { useCallback } from 'react';
 import {
   match, map, pair, replace,
 } from 'ramda';
-import Worker from './test.worker';
+import serialize from 'serialize-javascript';
+
+import Worker from 'Platform/commonWorker';
 
 const worker = new Worker();
 
@@ -18,13 +20,14 @@ const Show = () => {
   //   return pair(tk, variablesAtom({ id: tk }));
   // }, result);
   const readVaribales = useAtomCallback(useCallback((get) => {
-    worker.postMessage(def);
-    worker.onmessage = ({ data: { answer } }) => {
-      const usedVariables = map((variable) => {
-        const tk = replace(/%%_|_%%/g, '', variable).split('.')[0];
-        return pair(tk, variablesAtom({ id: tk }));
-      }, answer);
-      const res = map(([key, v]) => get(v), usedVariables);
+    worker.postMessage({
+      transform: serialize({
+        trans: (data) => data.map((d) => d.name),
+      }),
+      data: [{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }],
+    });
+    worker.onmessage = ({ data }) => {
+      console.log(data);
     };
   }, []));
   return (

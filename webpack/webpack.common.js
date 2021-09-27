@@ -28,11 +28,12 @@ module.exports = {
     alias,
     fallback: {
       assert: false,
+      buffer: require.resolve('buffer'),
     },
   },
   module: {
     rules: [
-      {test: /\.worker\.ts$/, loader: 'worker-loader'},
+      { test: /\.worker\.ts$/, loader: 'worker-loader' },
       {
         test: /\.(t|j)sx?$/,
         loader: 'esbuild-loader',
@@ -52,13 +53,14 @@ module.exports = {
       name: 'Platform',
       filename: 'remoteEntry.js',
       //if all federated Comp use the same copy of jotai, state will be shared  within App(Platform/State)
-      remotes:{
+      remotes: {
         slave: 'slave@http://localhost:8080/remoteEntry.js',
         'Platform': 'Platform@/remoteEntry.js',
       },
-      exposes:{
+      exposes: {
         './state': "@main/jotai",
         './connection': "@main/connection",
+        './commonWorker': "@example/test.worker"
       },
       shared: {
         ...deps,
