@@ -420,6 +420,13 @@
       }
     },
     {
+      "id" : "time_stream",
+      "enginePath": "timeGen",
+      "options":{
+        
+      }
+    },
+    {
       "id": "my_stream_line",
       "enginePath": "stream",
       "options": {
@@ -610,10 +617,10 @@
     },
     {
       "id": "my_Line",
-      "enginePath": "Line",
+      "enginePath": "ChartJs",
       "options": {
         "dataSources": [
-          "my_stream_line"
+          "time_stream"
         ]
       }
     },

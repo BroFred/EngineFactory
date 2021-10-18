@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Starter Snowpack App" />
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <div id="root" style="height:100vh"></div>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Starter Snowpack App" />
+  <script defer src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+  <script  defer src="https://unpkg.com/react@17.0.2/umd/react.<%=  process.env.NODE_ENV==='development'?'development':'production.min' %>.js" crossorigin="anonymous"></script>
+  <script  defer src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.<%=  process.env.NODE_ENV==='development'?'development':'production.min' %>.js" crossorigin="anonymous"></script>
+
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <div id="root" style="height:100vh"></div>
+</body>
+
 </html>

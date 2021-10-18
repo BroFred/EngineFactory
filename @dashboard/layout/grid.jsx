@@ -12,12 +12,13 @@ const DashboardGrid = ({ options, children }) => {
   const childrenWithlayout = useMemo(() => {
     const childWithLayout = zip(sortBy(prop('key'), children), sortBy(prop('i'), layout));
     return map(([child, layout]) => (
-      <Child key={layout.i} style={{ outline: '1px solid black' }}>{child}</Child>
+      <Child key={layout.i} style={{ outline: '1px solid black', overflow: 'auto' }}>{child}</Child>
     ), childWithLayout);
   }, [children, layout]);
   const onLayoutChange = (layout) => console.log(layout);
   return (
     <RGL
+      measureBeforeMount
       layout={layout}
       cols={12}
       rowHeight={30}

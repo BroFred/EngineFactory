@@ -3,15 +3,22 @@ import {
   AnimatedLineSeries,
   XYChart,
   Tooltip,
+  Annotation,
+  AnnotationLabel,
+  AnnotationConnector,
+  AnnotationLineSubject,
 } from '@visx/xychart';
+import { Brush } from '@visx/brush';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ParentSize } from '@visx/responsive';
 import {
   ProvidedZoom,
   TransformMatrix,
 } from '@visx/zoom/lib/types';
 import { Zoom } from '@visx/zoom';
+import { scaleBand } from '@visx/scale';
+import { last, takeLast } from 'ramda';
 
 const data1 = [
   { x: '2020-01-01', y: 50 },
@@ -115,8 +122,14 @@ const Line = ({
       type: 'linear',
     }}
   >
-    <AnimatedAxis orientation="left" label="value" />
-    <AnimatedAxis orientation="bottom" label="label" />
+    <AnimatedAxis
+      orientation="left"
+      label="value"
+    />
+    <AnimatedAxis
+      orientation="bottom"
+      label="label"
+    />
     {
             data.map((v, i) => <AnimatedLineSeries key={i} dataKey={i} data={v} {...accessors} />)
           }
@@ -135,7 +148,6 @@ const Line = ({
     />
   </XYChart>
 );
-
 export default Line;
 
 export const ZoomLine = () => {

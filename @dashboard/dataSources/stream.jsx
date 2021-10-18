@@ -3,7 +3,9 @@ import React from 'react';
 import { woker$ } from '@main/utils';
 
 export const config = ({ data }) => {
-  const source = woker$({ input$: interval(1000).pipe(take(data.length), scan((acc, curr) => (data[curr] ? [...acc, data[curr]] : acc), [])) });
+  // const source = woker$({ input$: interval(1000).pipe(take(data.length), scan((acc, curr) => (data[curr] ? [...acc, data[curr]] : acc), [])) });
+  const source = interval(1000).pipe(take(data.length), scan((acc, curr) => (data[curr] ? [...acc, data[curr]] : acc), []));
+
   return source;
 };
 

@@ -21,7 +21,10 @@ module.exports = {
     publicPath: 'auto',
     path: path.resolve(PATHS.local, 'build'),
   },
-  devtool: 'source-map',
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM"
+  },
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.tsx', '.ts'],
     modules: [path.resolve(PATHS.root, 'node_modules')],
@@ -47,6 +50,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Dashboard',
+      jsExtension: ".gz",
       template: path.join(__dirname, '../index.html'),
     }),
     new ModuleFederationPlugin({
@@ -68,6 +72,10 @@ module.exports = {
           singleton: true,
           requiredVersion: deps.jotai,
         },
+        "jotai/utils":{
+          singleton: true,
+          requiredVersion: deps.jotai,
+        },
         react: {
           singleton: true,
           requiredVersion: deps.react,
@@ -78,14 +86,5 @@ module.exports = {
         },
       },
     })
-  ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, '../index.html'),
-    },
-    hot: false,
-    host: process.env.HOST, // Defaults to `localhost` port: process.env.PORT, // Defaults to 8080
-    open: true, // Open the page in browser
-    port: '8081',
-  },
+  ]
 };
