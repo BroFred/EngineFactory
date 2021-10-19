@@ -12,10 +12,6 @@ import Worker from 'Platform/commonWorker';
 
 const worker = new Worker();
 
-XMLHttpRequest.prototype.send = function () {
-  return false;
-};
-
 const Show = () => {
   const def = useAtomValue(definitionAtom);
   const reg = /%%_(.*?)_%%/g;

@@ -5,7 +5,9 @@ const ctx: Worker = self as any;
 function deserialize(serializedJavascript) {
   return eval(`(${serializedJavascript})`);
 }
-
+// XMLHttpRequest.prototype.send = function () {
+//   return false;
+// };
 const importAndApplyArgs = async (func, args) => {
   const trans = await import(`ramda/es/${func}`);
   return args ? trans.default(...args) : trans.default;
