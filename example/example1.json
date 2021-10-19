@@ -636,7 +636,7 @@
     },
     {
       "id": "my_editor",
-      "enginePath": "@remote/Monaco",
+      "enginePath": "@remote slave Monaco http://localhost:8080/remoteEntry.js",
       "fallbackEnginePath": "Bypass",
       "options": {
         "dataSources": [

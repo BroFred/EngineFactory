@@ -1,4 +1,5 @@
 {
+  "sideEffects": false,
   "scripts": {
     "start": "webpack serve --config ./webpack/webpack.dev.js",
     "build": "webpack --config ./webpack/webpack.prod.js",

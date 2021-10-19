@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { atomFamily, atomWithReset } from 'jotai/utils';
+import { atomFamily, atomWithReset, selectAtom } from 'jotai/utils';
 import {
   map, match, replace, fromPairs, isEmpty, values, any, pair,
 } from 'ramda';
@@ -41,9 +41,12 @@ export const atomWithVariable = atomFamily(({
       console.log('start new');
       let fn;
       try {
-        fn = (isRemoteHost(enginePath)
-          ? await loadComponent('slave', `./${getRemoteModule(enginePath)}`)()
-          : await import(`@dashboard/${type}/${enginePath}`)).config;
+        if (isRemoteHost(enginePath)) {
+          const { name, module, url } = getRemoteModule(enginePath);
+          fn = (await loadComponent(url)(name, `./${module}`)).config;
+        } else {
+          fn = (await import(`@dashboard/${type}/${enginePath}`)).config;
+        }
       } catch (error) {
         fn = () => null;
       }

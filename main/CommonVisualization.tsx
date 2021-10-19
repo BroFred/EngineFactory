@@ -5,7 +5,9 @@ import { useAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { map } from 'ramda';
 import { baseDefinitionItem } from '@example/definition';
-import { atomWithVariable, variablesAtom, definitionAtom } from 'Platform/state';
+import {
+  atomWithVariable, variablesAtom, definitionAtom, remoteRepo,
+} from 'Platform/state';
 import {
   removeItem as removeViz, addItem as addViz, isRemoteHost, loadComponent, getRemoteModule,
 } from './utils';
@@ -21,10 +23,14 @@ class Edit extends React.Component {
 
   render() {
     const Comp = lazy(async () => {
-      const { Edit: Cp } = (isRemoteHost(this.props.enginePath)
-        ? await loadComponent('slave', `./${getRemoteModule(this.props.enginePath)}`)()
-        : await import(`@dashboard/visualization/${this.props.enginePath}`));
-      return { default: Cp };
+      let Cp;
+      if (isRemoteHost(this.props.enginePath)) {
+        const { name, module, url } = getRemoteModule(this.props.enginePath);
+        Cp = await loadComponent(url)(name, `./${module}`);
+      } else {
+        Cp = await import(`@dashboard/visualization/${this.props.enginePath}`);
+      }
+      return { default: Cp.Edit };
     });
 
     const Fallback = lazy(async () => {
