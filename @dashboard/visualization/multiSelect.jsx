@@ -21,7 +21,6 @@ export const Edit = ({ dataAtoms, options, variableAtoms }) => {
           ([flag]) => flag,
           map((v) => [v.selected, v.value], e.target.options),
         ));
-        console.log(selectedArr);
         setVariable(needJoin ? [selectedArr.join(',')] : selectedArr);
       }}
       multiple

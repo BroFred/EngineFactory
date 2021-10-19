@@ -4,6 +4,7 @@ import {
   sql, MySQL, keywordCompletion,
 } from '@codemirror/lang-sql';
 import { tooltips } from '@codemirror/tooltip';
+import { Kbd } from '@chakra-ui/react';
 
 export const config = () => null;
 
@@ -27,5 +28,10 @@ export const Edit = ({ dataAtoms, options, variableAtoms }) => {
     }
   }, [editorRef.current]);
 
-  return <div><div ref={editorRef} /></div>;
+  return (
+    <div>
+      <div ref={editorRef} />
+      <Kbd>shift</Kbd> + <Kbd>H</Kbd>
+    </div>
+  );
 };

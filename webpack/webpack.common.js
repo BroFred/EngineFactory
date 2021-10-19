@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 const path = require('path');
-
+const pjson = require('../package.json');
+const deps = pjson.dependencies;
 const PATHS = {
   local: path.join(__dirname, '../'),
   app: path.join(__dirname, '../src'),
@@ -14,10 +15,14 @@ const PATHS = {
 };
 
 module.exports = {
-  entry: path.resolve(PATHS.local, './main/index.jsx'),
+  entry: path.resolve(PATHS.local, './main/bootstrap.ts'),
   output: {
     publicPath: 'auto',
     path: path.resolve(PATHS.local, 'build'),
+  },
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM"
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.tsx', '.ts'],
@@ -46,7 +51,29 @@ module.exports = {
       template: path.join(__dirname, '../index.html'),
     }),
     new ModuleFederationPlugin({
-      name: 'host'
+      name: 'slave',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Monaco': '@dashboard/visualization/Monaco.jsx'
+      },
+      remotes:{
+        Platform: 'Platform@http://localhost:8081/remoteEntry.js'
+      },
+      shared: {
+        ...deps,
+        jotai: {
+          singleton: true,
+          requiredVersion: deps.jotai,
+        },
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"],
+        },
+      },
     })
   ],
   devServer: {
@@ -55,6 +82,6 @@ module.exports = {
     },
     host: process.env.HOST, // Defaults to `localhost` port: process.env.PORT, // Defaults to 8080
     open: true, // Open the page in browser
-    port: process.env.PORT,
+    port: 8080,
   },
 };
