@@ -1,4 +1,4 @@
-import { definitionAtom, variablesAtom } from 'Platform/state';
+import { definitionAtom, variablesAtom, VizAtom } from 'Platform/state';
 import { useAtomCallback, useAtomValue } from 'jotai/utils';
 
 import React, { useCallback } from 'react';

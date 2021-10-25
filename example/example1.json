@@ -44,13 +44,6 @@
           "h": 1
         },
         {
-          "i": "my_viz",
-          "x": 0,
-          "y": 5,
-          "w": 4,
-          "h": 4
-        },
-        {
           "i": "my_viz_rest",
           "x": 0,
           "y": 1,
@@ -61,13 +54,6 @@
           "i": "my_vega",
           "x": 4,
           "y": 1,
-          "w": 4,
-          "h": 4
-        },
-        {
-          "i": "my_stream_viz",
-          "x": 4,
-          "y": 5,
           "w": 4,
           "h": 4
         },
@@ -631,16 +617,6 @@
         "dataSources": [
           "my_mult_line",
           "my_stream_line"
-        ]
-      }
-    },
-    {
-      "id": "my_editor",
-      "enginePath": "@remote slave Monaco http://localhost:8080/remoteEntry.js",
-      "fallbackEnginePath": "Bypass",
-      "options": {
-        "dataSources": [
-          "my_rest"
         ]
       }
     },

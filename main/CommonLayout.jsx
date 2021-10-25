@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 
 const LayoutCommon = ({
   enginePath, options, children, ...rest
 }) => {
-  const Layout = React.lazy(async () => import(`@dashboard/layout/${enginePath}`));
+  useEffect(() => () => console.log('unmount layout'), []);
+  const Layout = useMemo(() => React.lazy(async () => import(`@dashboard/layout/${enginePath}`)), [enginePath]);
   return (
     <Layout options={options} {...rest}>
       {children}
@@ -11,4 +12,4 @@ const LayoutCommon = ({
   );
 };
 
-export default LayoutCommon;
+export default memo(LayoutCommon);

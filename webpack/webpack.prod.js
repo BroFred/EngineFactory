@@ -17,6 +17,7 @@ module.exports = merge(common,
         new ESBuildMinifyPlugin({
           target: 'es2015',
           css: true,
+          pure: ["console.log"]
         }),
       ],
     },

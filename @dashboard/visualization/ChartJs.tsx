@@ -1,10 +1,12 @@
 import React, {
   useEffect, useRef, useMemo,
 } from 'react';
-import { useAtomValue } from 'jotai/utils';
+import { useAtomValue, useAtomValue } from 'jotai/utils';
 import { useObservableState } from 'observable-hooks';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
+
+import { alertAtom } from 'Platform/state';
 
 export const config = () => null;
 
@@ -13,7 +15,8 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
   const data = useObservableState(enginePath, []);
   const chart = useRef();
   const ref = useRef();
-
+  const alert = useAtomValue(alertAtom);
+  console.log(alert);
   const config1 = useMemo(() => ({
     type: 'line',
     data: {

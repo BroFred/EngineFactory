@@ -1,13 +1,14 @@
 import React, {
-  lazy, useCallback, useEffect, useRef,
+  lazy, useCallback, useEffect, useRef, memo, Suspense,
 } from 'react';
 import { useAtom } from 'jotai';
-import { useAtomCallback } from 'jotai/utils';
+import { useAtomCallback, useAtomValue } from 'jotai/utils';
 import { map } from 'ramda';
 import { baseDefinitionItem } from '@example/definition';
 import {
   atomWithVariable, variablesAtom, definitionAtom, remoteRepo,
 } from 'Platform/state';
+import { Button } from '@chakra-ui/react';
 import {
   removeItem as removeViz, addItem as addViz, isRemoteHost, loadComponent, getRemoteModule,
 } from './utils';
@@ -46,10 +47,15 @@ class Edit extends React.Component {
   }
 }
 
+const Comp = Edit;
+// memo(Edit);
+
 const VizCommon = ({
-  options, enginePath, id, fallbackEnginePath,
-}:baseDefinitionItem):JSX.Element => {
-  console.log('called');
+  vizAtom, onRemove,
+}):JSX.Element => {
+  const {
+    options, enginePath, id, fallbackEnginePath,
+  } = vizAtom;
   const didMountRef = useRef(false);
   const [config, setConfig] = useAtom(atomWithVariable({
     options, enginePath, id, type: 'visualization',
@@ -75,7 +81,8 @@ const VizCommon = ({
     didMountRef.current = true;
   }, [config]);
   useEffect(() => () => {
-    deleteVisualization({ options, enginePath, id });
+    console.log('unmount', `${vizAtom.id}`);
+    // deleteVisualization({ options, enginePath, id });
   }, []);
   if (config.isWaitingForVariables) {
     return <></>;
@@ -87,15 +94,21 @@ const VizCommon = ({
   const tkAtoms = map((tk) => variablesAtom({ id: tk }), config.options.variables || []);
 
   return (
-    <Edit
-      enginePath={config.enginePathRaw}
-      fallbackEnginePath={fallbackEnginePath}
-      options={config.options}
-      setConfig={(options, enginePath) => setConfig({ options, enginePath })}
-      dataAtoms={dsAtoms}
-      variableAtoms={tkAtoms}
-    />
+    <Suspense fallback={<></>}>
+      <Button onClick={onRemove}>
+        {`${vizAtom.id}`}
+        {' '}
+      </Button>
+      <Comp
+        enginePath={config.enginePathRaw}
+        fallbackEnginePath={fallbackEnginePath}
+        options={config.options}
+        setConfig={(options, enginePath) => setConfig({ options, enginePath })}
+        dataAtoms={dsAtoms}
+        variableAtoms={tkAtoms}
+      />
+    </Suspense>
   );
 };
 
-export default VizCommon;
+export default memo(VizCommon);

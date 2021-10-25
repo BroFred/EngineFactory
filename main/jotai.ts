@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
-import { atomFamily, atomWithReset, selectAtom } from 'jotai/utils';
+import { atomFamily, atomWithReset, splitAtom } from 'jotai/utils';
 import {
-  map, match, replace, fromPairs, isEmpty, values, any, pair,
+  map, match, replace, fromPairs, isEmpty, values, any, pair, filter,
 } from 'ramda';
 import { jVar } from 'json-variables';
 import {
@@ -10,8 +10,27 @@ import {
 import { baseDefinitionProps, variablesItem, baseDefinitionItem } from '@example/definition';
 import { isRemoteHost, loadComponent, getRemoteModule } from './utils';
 
-export const definitionAtom = atomWithReset<Record<string, any>>({});
+export const definitionAtom = atomWithReset<Record<string, any>>({
+  visualization: [], layout: {}, dataSource: [], variables: [],
+});
 
+export const VizAtom = atom([]);
+export const DsAtom = atom([]);
+export const LayoutAtom = atom([]);
+
+export const DsSplited = atom(
+  (get) => get(DsAtom).map((a) => atom(a)),
+);
+export const VizSplited = atom(
+  (get) => get(VizAtom),
+  (get, set, removedAtom) => {
+    const { id: rid } = removedAtom;
+    const newList = get(VizAtom).filter(
+      ({ id }) => id !== rid,
+    );
+    set(VizAtom, newList);
+  },
+);
 export const variablesAtom = atomFamily(({ id, value }: variablesItem) => {
   const valueAtom = atom({ id, value: value ?? [] });
   return atom(
@@ -100,3 +119,11 @@ export const atomWithVariable = atomFamily(({
     },
   );
 }, (a, b) => a.id === b.id);
+
+const alertSetting = atom({ id: 'default' });
+export const alertAtom = atom(
+  async (get) => {
+    const { id } = get(alertSetting);
+    return Promise.resolve(id);
+  },
+);
