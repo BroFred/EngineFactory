@@ -612,7 +612,8 @@
     },
     {
       "id": "mult_Line",
-      "enginePath": "Line",
+      "enginePath": "@remote slave Monaco http://localhost:8080/remoteEntry.js",
+      "fallbackEnginePath":"Line",
       "options": {
         "dataSources": [
           "my_mult_line",

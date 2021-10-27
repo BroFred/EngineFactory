@@ -21,10 +21,10 @@ module.exports = {
     publicPath: 'auto',
     path: path.resolve(PATHS.local, 'build'),
   },
-  // externals: {
-  //   react: "React",
-  //   "react-dom": "ReactDOM"
-  // },
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM"
+  },
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.tsx', '.ts'],
     modules: [path.resolve(PATHS.root, 'node_modules')],

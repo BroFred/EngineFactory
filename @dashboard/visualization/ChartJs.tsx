@@ -16,7 +16,6 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
   const chart = useRef();
   const ref = useRef();
   const alert = useAtomValue(alertAtom);
-  console.log(alert);
   const config1 = useMemo(() => ({
     type: 'line',
     data: {
@@ -47,6 +46,7 @@ export const Edit = ({ dataAtoms, options, setConfig }) => {
     },
   }), []);
 
+  useEffect(() => () => console.log('unmount'), []);
   useEffect(() => {
     if (ref.current && !chart.current) {
       chart.current = new Chart(ref.current, config1);

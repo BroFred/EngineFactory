@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { useAtom } from 'jotai';
 import { useAtomCallback, useAtomValue } from 'jotai/utils';
-import { map } from 'ramda';
+import { map, equals } from 'ramda';
 import { baseDefinitionItem } from '@example/definition';
 import {
   atomWithVariable, variablesAtom, definitionAtom, remoteRepo,
@@ -20,6 +20,10 @@ class Edit extends React.Component {
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
+  }
+
+  shouldComponentUpdate(pre, next) {
+    return equals(pre, next);
   }
 
   render() {
@@ -48,7 +52,6 @@ class Edit extends React.Component {
 }
 
 const Comp = Edit;
-// memo(Edit);
 
 const VizCommon = ({
   vizAtom, onRemove,

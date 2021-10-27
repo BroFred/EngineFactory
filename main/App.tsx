@@ -164,10 +164,10 @@ const App: React.FC<{}> = () => {
     dataSource: baseDefinitionItem[] } = def;
   return (
     <ChakraProvider>
-      <Profile />
+      {/* <Profile />
       <AddMetaData />
       <LoginButton />
-      <LogoutButton />
+      <LogoutButton /> */}
       <Provider
         initialValues={[
           [definitionAtom, { visualization, layout, dataSource }],
