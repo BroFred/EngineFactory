@@ -38,11 +38,12 @@ const server = http.createServer(app);
 server.listen(port);
 const wss = new WebSocketServer({ server });
 wss.on('connection', (ws) => {
-  setInterval(() => {
+  const interval = setInterval(() => {
     const type = Math.random() > 0.5 ? 'A' : 'B';
     ws.send(JSON.stringify({ data: [1, 2, 3], type }));
   }, 2000);
   ws.on('close', () => {
+    clearInterval(interval);
     console.log('websocket connection close');
   });
 });

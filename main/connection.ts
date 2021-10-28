@@ -1,7 +1,12 @@
 import { Manager } from 'socket.io-client';
-
 import { webSocket } from 'rxjs/webSocket';
 import { retryWhen, tap, delay } from 'rxjs/operators';
+
+// const source = new EventSource('https://localhost:3001/countdown');
+// source.onmessage = function (e) {
+//   e.data < 5 && source.close();
+//   console.log(e.data);
+// };
 
 const subject = webSocket('ws://localhost:3000').pipe(
   retryWhen((errors) => errors.pipe(

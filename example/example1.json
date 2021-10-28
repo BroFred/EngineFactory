@@ -98,7 +98,7 @@
   "dataSource": [
     {
       "id": "stream_grid",
-      "enginePath": "ws",
+      "enginePath": "sse",
       "options":{
         "data": [
           [1,2,3],

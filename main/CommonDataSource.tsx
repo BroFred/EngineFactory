@@ -50,11 +50,11 @@ const DataSourceCommon: React.FC<baseDefinitionItem> = ({ dataAtom, onRemove }) 
     };
   }, []);
   return (
-    <></>
-    // <Comp
-    //   options={config.options}
-    //   setConfig={(options, enginePath) => setConfig({ options, enginePath })}
-    // />
+    // <></>
+    <Comp
+      options={config.options}
+      setConfig={(options, enginePath) => setConfig({ options, enginePath })}
+    />
   );
 };
 
