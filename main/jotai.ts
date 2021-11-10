@@ -1,5 +1,7 @@
 import { atom } from 'jotai';
-import { atomFamily, atomWithReset, splitAtom } from 'jotai/utils';
+import {
+  atomFamily, atomWithReset, splitAtom, atomWithStorage,
+} from 'jotai/utils';
 import {
   map, match, replace, fromPairs, isEmpty, values, any, pair, filter,
 } from 'ramda';
@@ -33,10 +35,14 @@ export const VizSplited = atom(
 );
 export const variablesAtom = atomFamily(({ id, value }: variablesItem) => {
   const valueAtom = atom({ id, value: value ?? [] });
+  valueAtom.onMount = () => {
+    localStorage.setItem(`var_${id}`, JSON.stringify({ id, value: value ?? [] }));
+  };
   return atom(
     (get) => get(valueAtom),
     (get, set, v: string[]) => {
       set(valueAtom, { id, value: v });
+      localStorage.setItem(`var_${id}`, JSON.stringify({ id, value: v }));
     },
   );
 }, (a, b) => a.id === b.id);
@@ -53,7 +59,7 @@ export const atomWithVariable = atomFamily(({
   data$.subscribe({
     complete: () => console.log('rxjs killed'),
   });
-  return atom(
+  const result = atom(
     async (get): Promise<baseDefinitionProps
     & { isWaitingForVariables?: boolean; enginePathRaw: string }> => {
       const enginePath = get(epAtom);
@@ -116,8 +122,14 @@ export const atomWithVariable = atomFamily(({
       if (options) {
         set(def, options);
       }
+      localStorage.setItem(`${type}_${id}`, JSON.stringify({ options, id, enginePath }));
     },
   );
+  result.onMount = () => {
+    console.log('create new');
+    localStorage.setItem(`${type}_${id}`, JSON.stringify({ options, id, enginePath: ep }));
+  };
+  return result;
 }, (a, b) => a.id === b.id);
 
 const alertSetting = atom({ id: 'default' });

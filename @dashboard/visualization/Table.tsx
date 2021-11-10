@@ -1,4 +1,13 @@
-import { Box } from '@chakra-ui/react';
+import {
+  Box, Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from '@chakra-ui/react';
 import React from 'react';
 import { useVirtual } from 'react-virtual';
 import { useAtomValue } from 'jotai/utils';
@@ -14,12 +23,8 @@ export const Edit = ({ dataAtoms }):JSX.Element => {
   const rowVirtualizer = useVirtual({
     size: data.length,
     parentRef,
-  });
-
-  const columnVirtualizer = useVirtual({
-    horizontal: true,
-    size: data[0].length,
-    parentRef,
+    paddingStart: 41,
+    estimateSize: React.useCallback(() => 53, []),
   });
 
   return (
@@ -31,40 +36,41 @@ export const Edit = ({ dataAtoms }):JSX.Element => {
         overflow: 'auto',
       }}
     >
-      <div
-        style={{
-          height: `${rowVirtualizer.totalSize}px`,
-          width: `${columnVirtualizer.totalSize}px`,
-          position: 'relative',
-        }}
-      >
-        {rowVirtualizer.virtualItems.map((virtualRow) => (
-          <React.Fragment key={virtualRow.index}>
-            {columnVirtualizer.virtualItems.map((virtualColumn) => (
-              <Box
-                key={virtualColumn.index}
-                ref={(el) => {
-                  virtualRow.measureRef(el);
-                  virtualColumn.measureRef(el);
-                }}
-                position="absolute"
-                top="0"
-                left="0"
-                w="7rem"
-                h="2rem"
-                transform={`translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`}
+      <Box>
+        <Table
+          variant="striped"
+        >
+          <Thead>
+            <Tr>
+              <Th>To convert</Th>
+              <Th>into</Th>
+              <Th isNumeric>multiply by</Th>
+            </Tr>
+          </Thead>
+          <Tbody
+            style={{
+              width: '100%',
+            }}
+          >
+            {rowVirtualizer.virtualItems.map((virtualRow) => (
+              <Tr
+                key={virtualRow.index}
+                w="100%"
               >
-                Cell
-                {' '}
-                {virtualRow.index}
-                ,
-                {' '}
-                {virtualColumn.index}
-              </Box>
+                {data[virtualRow.index].map((virtualColumn, index) => (
+                  <Td
+                    outline="1px solid black"
+                    key={index}
+                    h="2rem"
+                  >
+                    {virtualColumn}
+                  </Td>
+                ))}
+              </Tr>
             ))}
-          </React.Fragment>
-        ))}
-      </div>
+          </Tbody>
+        </Table>
+      </Box>
     </div>
   );
 };

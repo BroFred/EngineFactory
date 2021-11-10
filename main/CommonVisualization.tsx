@@ -114,4 +114,4 @@ const VizCommon = ({
   );
 };
 
-export default memo(VizCommon);
+export default VizCommon;

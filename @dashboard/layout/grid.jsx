@@ -2,7 +2,7 @@ import React, {
   useMemo, forwardRef, memo, useEffect,
 } from 'react';
 import {
-  sortBy, zip, prop, map, pluck, without, filter,
+  sortBy, zip, prop, map, pluck, without, filter, reduce,
 } from 'ramda';
 import GridLayout, { WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
@@ -22,6 +22,10 @@ const DashboardGrid = ({ options, children }) => {
       },
     });
   };
+
+  const attrs = useMemo(
+    () => reduce((acc, val) => ({ [val.i]: val, ...acc }), {}, layout), [layout],
+  );
   return (
     <RGL
       measureBeforeMount
@@ -34,7 +38,7 @@ const DashboardGrid = ({ options, children }) => {
     >
       {
         map((child) => (
-          <Child key={child.key} style={{ outline: '1px solid black', overflow: 'auto' }}>{child}</Child>
+          <Child key={child.key}  style={{ outline: '1px solid black', overflow: 'auto' }}>{child}</Child>
         ), children)
       }
     </RGL>
